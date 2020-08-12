@@ -7,9 +7,9 @@ A new Flutter project.
 
 ## ScreenShot
 |
-<img src="images/Screenshot_1597217294.png" height="800" width="300">  |
+<img src="images/Screenshot_1597217294.png" height="600" width="300">  |
 |
-<img src="images/Screenshot_1597217299.png" height="800" width="300">  |
+<img src="images/Screenshot_1597217299.png" height="600" width="300">  |
 |
-<img src="images/Screenshot_1597217310.png" height="800" width="300">  |
+<img src="images/Screenshot_1597217310.png" height="600" width="300">  |
 |
