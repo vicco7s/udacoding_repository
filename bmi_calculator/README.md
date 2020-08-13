@@ -11,3 +11,7 @@ A new Flutter project.
 
 |<img src="image/photo_2020-08-13_19-31-46.jpg" height="500" width="300">|
 
+
+# Running app
+
+|<img src="image/output.gif" height="500" width="300">|
