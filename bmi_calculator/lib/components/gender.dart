@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: camel_case_types
 class Result_Gender extends StatelessWidget {
   Result_Gender({@required this.chardchild,this.colour,this.onPress});
 

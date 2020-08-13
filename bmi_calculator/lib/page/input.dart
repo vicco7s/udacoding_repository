@@ -1,6 +1,6 @@
 import 'package:bmi_calculator/components/constant.dart';
 import 'package:bmi_calculator/components/gender.dart';
-import 'package:bmi_calculator/components/iconGender.dart';
+import 'package:bmi_calculator/components/iconbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -95,9 +95,7 @@ class _InputBmiState extends State<InputBmi> {
             ),
           ),
 
-          Column(
-           children: [
-             Row(
+            Row(
                children: [
                  Text('Umur kamu berapa ?'),
                ],
@@ -105,17 +103,43 @@ class _InputBmiState extends State<InputBmi> {
             Row(
              children: [
                Container(
-                padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                padding: EdgeInsets.fromLTRB(0, 20, 10, 20),
                 child: Text(
                  age.toString(),
-                 style: TextStyle(fontSize: 50,color: Colors.white), 
+                 style: TextStyle(fontSize: 60,color: Colors.white), 
                 ), 
-               )
+               ),
+               Column(
+                children: [
+                  ButtonIcon(
+                    onPress: (){
+                      setState(() {
+                        age++;
+                      });
+                    },
+                    icon: Icons.arrow_drop_up,
+                  ),
+                  SizedBox(height: 10,),
+                  ButtonIcon(
+                    onPress: (){
+                      setState(() {
+                        age--;
+                      });
+                    },
+                    icon: Icons.arrow_drop_down,
+                  )
+                ], 
+               ),
              ], 
-            )
+            ),
+            Padding(
+            padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+            child: Divider(
+             color: Colors.white, 
+            ),
+          ),
 
-           ], 
-          )
+  
           
          ], 
         ), 
@@ -123,6 +147,7 @@ class _InputBmiState extends State<InputBmi> {
     );
   }
 }
+
 
 
 
