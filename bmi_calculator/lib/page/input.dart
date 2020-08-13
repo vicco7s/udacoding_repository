@@ -1,3 +1,4 @@
+import 'package:bmi_calculator/calculator_brain.dart';
 import 'package:bmi_calculator/components/constant.dart';
 import 'package:bmi_calculator/components/gender.dart';
 import 'package:bmi_calculator/components/iconbutton.dart';
@@ -24,9 +25,6 @@ class _InputBmiState extends State<InputBmi> {
   int age = 20;
   int height = 150;
   int weight = 60;
-
-// ignore: unused_element
-
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +74,10 @@ class _InputBmiState extends State<InputBmi> {
                          });
                        },
                        colour: selectedGender == Gender.male ? kActiveColor : kDisableColor,
-                       chardchild: Icon(FontAwesomeIcons.mars)
+                       chardchild: Icon(
+                         FontAwesomeIcons.mars,
+                         color: selectedGender == Gender.male ? kDisableColor : kIconAktive,
+                         )
                        ), 
                     ),
                     Padding(
@@ -96,7 +97,10 @@ class _InputBmiState extends State<InputBmi> {
                          });
                        },
                        colour: selectedGender == Gender.famale ? kActiveColor : kDisableColor,
-                       chardchild: Icon(FontAwesomeIcons.venus),), 
+                       chardchild: Icon(
+                          FontAwesomeIcons.venus,
+                          color: selectedGender == Gender.famale ? kDisableColor : kIconAktive,
+                       ),), 
                       ),
                       Padding(
                         padding: const EdgeInsets.all(15.0),
@@ -202,7 +206,13 @@ class _InputBmiState extends State<InputBmi> {
             Center(
               child: GestureDetector(
                 onTap: (){
-                  Navigator.push(context, CupertinoPageRoute(builder: (context) => ResultPage()));
+                  CalculatorBrain calc  = CalculatorBrain(weight: weight,height: height);
+                  Navigator.push(context, CupertinoPageRoute(builder: (context) => ResultPage(
+                    bmi: calc.calculateBMI(),
+                    resultText: calc.getResult(),
+                    interperen: calc.getIndependen(),
+                    colorResult: calc.getColorText(),
+                  )));
                 },
                 child: Container(
                   padding: EdgeInsets.fromLTRB(50, 15, 50, 15),
@@ -243,12 +253,12 @@ class _InputBmiState extends State<InputBmi> {
          minValue: 10, 
          maxValue: 150, 
          title: Text('Sesuaikan Berat badan mu'),
-         initialIntegerValue: height);
+         initialIntegerValue: weight);
      }
    ).then((value) {
      if (value != null) {
        setState(() {
-         height = value;
+         weight = value;
        });
      }
    });

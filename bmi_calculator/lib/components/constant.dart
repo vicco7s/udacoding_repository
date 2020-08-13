@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 const kActiveColor = Color(0xFFa0f0bd);
+const kColorResult = Color(0xff56eaca);
 const kDisableColor = Colors.black;
+const kIconAktive = Colors.white;
 
 const kLabelTextStyle = TextStyle(
   fontWeight: FontWeight.bold,
