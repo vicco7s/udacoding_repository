@@ -1,6 +1,8 @@
 import 'package:bmi_calculator/components/constant.dart';
 import 'package:bmi_calculator/components/gender.dart';
 import 'package:bmi_calculator/components/iconbutton.dart';
+import 'package:bmi_calculator/page/result.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:numberpicker/numberpicker.dart';
@@ -24,29 +26,24 @@ class _InputBmiState extends State<InputBmi> {
   int weight = 60;
 
 // ignore: unused_element
-void _showDialog() {
-   showDialog(
-     context: context,
-     builder: (BuildContext context) {
-       return NumberPickerDialog.integer(
-         minValue: 10, 
-         maxValue: 250, 
-         initialIntegerValue: height);
-     }
-   ).then((value) {
-     if (value != null) {
-       setState(() {
-         height = value;
-       });
-     }
-   });
- }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
           child: Container(
+          decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment(0.6, -0.6),
+              stops: [1, 1],
+              colors: [
+                  Color(0xff313131),
+                  Color(0xff363636), //orange
+              ],
+            ),
+          ),
           padding: EdgeInsets.all(40),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -127,7 +124,7 @@ void _showDialog() {
                   padding: EdgeInsets.fromLTRB(0, 20, 10, 20),
                   child: Text(
                    age.toString(),
-                   style: TextStyle(fontSize: 60,color: Colors.white), 
+                   style: kNumberText, 
                   ), 
                  ),
                  Column(
@@ -170,23 +167,92 @@ void _showDialog() {
                  ],
                ),
                SizedBox(height: 10,),
-               ListTile(
-                leading: InkWell(
+               Row(
+                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  InkWell(
                       onTap: (){
-                       _showDialog();
+                       _tinggiBadan();
                       },
-                      child: Text(height.toString(),style: TextStyle(fontSize: 50,))),
-                title: Text('cm'),
+                      child: Row(
+                        children: [
+                          Text(height.toString(),style: TextStyle(fontSize: 50,)),
+                          Padding(padding: EdgeInsets.fromLTRB(10, 20, 0, 0),
+                          child: Text('Cm'),
+                          )
+                        ],
+                      )),
+                  InkWell(
+                      onTap: (){
+                       _berat();
+                      },
+                      child: Row(
+                        children: [
+                          Text(weight.toString(),style: TextStyle(fontSize: 50,)),
+                          Padding(padding: EdgeInsets.fromLTRB(10, 20, 0, 0),
+                          child: Text('Kg'),
+                          )
+                        ],
+                      )),
+                ], 
                )
              ], 
-            )
-            
+            ),
+            SizedBox(height: 30,),
+            Center(
+              child: GestureDetector(
+                onTap: (){
+                  Navigator.push(context, CupertinoPageRoute(builder: (context) => ResultPage()));
+                },
+                child: Container(
+                  padding: EdgeInsets.fromLTRB(50, 15, 50, 15),
+                  decoration:bCalculatebt,
+                  child: Text('Calculator bmi kamu',style: kCalculateText,)),
+              ),
+            ),
+
            ], 
           ), 
          ),
       ), 
     );
   }
+  void _tinggiBadan() {
+   showDialog(
+     context: context,
+     builder: (BuildContext context) {
+       return NumberPickerDialog.integer(
+         minValue: 100, 
+         maxValue: 250, 
+         title: Text('Sesuaikan tinggi badan mu'),
+         initialIntegerValue: height);
+     }
+   ).then((value) {
+     if (value != null) {
+       setState(() {
+         height = value;
+       });
+     }
+   });
+ }
+ void _berat() {
+   showDialog(
+     context: context,
+     builder: (BuildContext context) {
+       return NumberPickerDialog.integer(
+         minValue: 10, 
+         maxValue: 150, 
+         title: Text('Sesuaikan Berat badan mu'),
+         initialIntegerValue: height);
+     }
+   ).then((value) {
+     if (value != null) {
+       setState(() {
+         height = value;
+       });
+     }
+   });
+ }
 }
 
 
