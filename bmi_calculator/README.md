@@ -7,7 +7,7 @@ A new Flutter project.
 
 ## ScreenShot
 
-|<img src="image/photo_2020-08-13_19-31-57.jpg" height="150" width="100">
+|<img src="image/photo_2020-08-13_19-31-57.jpg" height="500" width="300">|
 
-|<img src="image/photo_2020-08-13_19-31-46.jpg" height="150" width="100">|
+|<img src="image/photo_2020-08-13_19-31-46.jpg" height="500" width="300">|
 
