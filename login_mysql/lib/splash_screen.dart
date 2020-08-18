@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:login_mysql/constant/constant.dart';
 import 'package:login_mysql/screen/login.dart';
 
 class SplashScreen extends StatefulWidget {
