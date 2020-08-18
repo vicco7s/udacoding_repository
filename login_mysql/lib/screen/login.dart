@@ -98,6 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
   @override
+  // ignore: missing_return
   Widget build(BuildContext context) {
     switch (_loginStatus) {
       case statusLogin.notSignIn :

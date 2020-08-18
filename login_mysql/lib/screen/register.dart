@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:login_mysql/components/containerpaint.dart';
 import 'package:login_mysql/constant/constant.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -8,9 +10,56 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-    List gender=["Male","Female"];
 
-  String sex;
+  TextEditingController cUsername = TextEditingController();
+  TextEditingController cFullName = TextEditingController();
+  TextEditingController cEmail = TextEditingController();
+  TextEditingController cPassword = TextEditingController();
+  TextEditingController cAlamat = TextEditingController();
+  
+  List sex=["Male","Female"];
+
+  String nUsername, nFullName, nEmail, nPassword, nAlamat;
+  String gender = "";
+
+  //menambahkan key form
+  final _keyForm = GlobalKey<FormState>();
+  // check data saat pressed sign up
+    checkForm(){
+      final form = _keyForm.currentState;
+      if(form.validate()){
+      form.save();
+      submitDataRegister();
+  }
+}
+
+  submitDataRegister() async{
+    final responseData = await http.post("http://localhost:8080/Php/registasi.php",
+    body: {
+      "username" : nUsername,
+      "full_name": nFullName,
+      "email"    : nEmail,
+      "password" : nPassword,
+      "gender"   : gender,
+      "alamat"   : nAlamat,
+    });
+
+    final data = jsonDecode(responseData.body);
+
+    int value = data['value'];
+    String pesan = data['massage'];
+
+    //check value 1 or 0
+    if (value == 1) {
+      setState(() {
+        Navigator.pop(context);
+      });
+    } else if (value == 2) {
+      print(pesan);
+    } else {
+      print(pesan);
+  }
+}
 
 Row addRadioButton(int btnValue, String title) {
     return Row(
@@ -18,12 +67,12 @@ Row addRadioButton(int btnValue, String title) {
   children: <Widget>[
     Radio(
       activeColor: kColorPink,
-      value: gender[btnValue],
-      groupValue: sex,
+      value: sex[btnValue],
+      groupValue: gender,
       onChanged: (value){
         setState(() {
           print(value);
-          sex=value;
+          gender=value;
         });
       },
     ),
@@ -36,7 +85,8 @@ Row addRadioButton(int btnValue, String title) {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: Form(
+        key: _keyForm,
         child: CustomPaint(
          painter: CurvePainter(),
          child: Container(
@@ -45,7 +95,7 @@ Row addRadioButton(int btnValue, String title) {
           child: Column(
            children: [
              Container(
-               padding: EdgeInsets.fromLTRB(0, 0, 0, 50),
+               padding: EdgeInsets.fromLTRB(0, 0, 0, 30),
                child: Text('Membuat Akun Baru',style: TextStyle(color: Colors.grey,fontWeight: FontWeight.bold,fontSize: 20,))),
                Container(
                 padding: EdgeInsets.fromLTRB(50, 0, 50, 0),
@@ -56,7 +106,8 @@ Row addRadioButton(int btnValue, String title) {
                   }
                   return null;
                 },
-                //  controller: usernameController,
+                controller: cUsername,
+                onSaved: (value) => nUsername = cUsername.text,
                 decoration: InputDecoration(
                 hintText: 'Username',
                 hintStyle: kColorField,
@@ -69,7 +120,7 @@ Row addRadioButton(int btnValue, String title) {
                ),
              ), 
             ),
-            SizedBox(height: 20,),
+            SizedBox(height: 10,),
             Container(
                 padding: EdgeInsets.fromLTRB(50, 0, 50, 0),
                 child: TextFormField(
@@ -79,7 +130,8 @@ Row addRadioButton(int btnValue, String title) {
                   }
                   return null;
                 },
-                //  controller: usernameController,
+                controller: cFullName,
+                onSaved: (value) => nFullName = cFullName.text,
                 decoration: InputDecoration(
                 hintText: 'Fullname',
                 hintStyle: kColorField,
@@ -92,7 +144,7 @@ Row addRadioButton(int btnValue, String title) {
                ),
              ), 
             ),
-            SizedBox(height: 20,),
+            SizedBox(height: 10,),
             Container(
                 padding: EdgeInsets.fromLTRB(50, 0, 50, 0),
                 child: TextFormField(
@@ -102,7 +154,8 @@ Row addRadioButton(int btnValue, String title) {
                   }
                   return null;
                 },
-                //  controller: usernameController,
+                controller: cEmail,
+                onSaved: (value) => nEmail = cEmail.text,
                 decoration: InputDecoration(
                 hintText: 'Email',
                 hintStyle: kColorField,
@@ -115,7 +168,7 @@ Row addRadioButton(int btnValue, String title) {
                ),
              ), 
             ),
-            SizedBox(height: 20,),
+            SizedBox(height: 10,),
                Container(
                 padding: EdgeInsets.fromLTRB(50, 0, 50, 0),
                 child: TextFormField(
@@ -126,7 +179,8 @@ Row addRadioButton(int btnValue, String title) {
                   }
                   return null;
                 },
-                //  controller: usernameController,
+                controller: cPassword,
+                onSaved: (value) => nPassword = cPassword.text,
                 decoration: InputDecoration(
                 hintText: 'Password',
                 hintStyle: kColorField,
@@ -139,7 +193,7 @@ Row addRadioButton(int btnValue, String title) {
                ),
              ), 
             ),
-            SizedBox(height: 20,),
+            SizedBox(height: 10,),
             Container(
                 padding: EdgeInsets.fromLTRB(50, 0, 50, 0),
                 child: TextFormField(
@@ -149,7 +203,8 @@ Row addRadioButton(int btnValue, String title) {
                   }
                   return null;
                 },
-                //  controller: usernameController,
+                controller: cAlamat,
+                onSaved: (value) => nAlamat = cAlamat.text,
                 decoration: InputDecoration(
                 hintText: 'Alamat',
                 hintStyle: kColorField,
@@ -162,7 +217,7 @@ Row addRadioButton(int btnValue, String title) {
                ),
              ), 
             ),
-            SizedBox(height: 20,),
+            SizedBox(height: 10,),
             Container(
               padding: EdgeInsets.fromLTRB(50, 0, 50, 0),
              child: Column(
@@ -175,17 +230,21 @@ Row addRadioButton(int btnValue, String title) {
                 Row(
                  mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    addRadioButton(0, 'Male'),
-                    addRadioButton(1, 'Female'),
+                    addRadioButton(0, 'Cowok'),
+                    addRadioButton(1, 'Cewek'),
                   ],
                 ),
               ], 
              ) 
             ),
-            SizedBox(height: 20,),
+            SizedBox(height: 10,),
             Center(
              child: GestureDetector(
-              onTap: (){},
+              onTap: (){
+                setState(() {
+                  checkForm();
+                });
+              },
               child: Container(
                 padding: EdgeInsets.fromLTRB(117, 20, 117, 20),
                 decoration: BoxDecoration(
@@ -196,7 +255,7 @@ Row addRadioButton(int btnValue, String title) {
               ), 
              ), 
             ),
-            SizedBox(height: 60,),
+            SizedBox(height: 100,),
             Container(
               padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
               child: Row(
@@ -212,8 +271,7 @@ Row addRadioButton(int btnValue, String title) {
                ], 
               ),
             ),
-            
-            
+
            ], 
           ), 
          ), 
