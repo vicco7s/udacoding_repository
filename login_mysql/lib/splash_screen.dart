@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:login_mysql/constant/constant.dart';
 import 'package:login_mysql/screen/login.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -28,6 +29,6 @@ class _SplashScreenState extends State<SplashScreen> {
     return Timer(Duration(seconds: 5), onDone);
   }
   void onDone() {
-    Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => LoginScreen()));
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginScreen()));
   }
 }
