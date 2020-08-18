@@ -33,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   // respon and request data to json
   submitDataLogin() async{
-    final responseData = await http.post("http://localhost:8080/Php/login.php",body: {
+    final responseData = await http.post("http://10.0.2.2:8080/Php/login.php",body: {
       "username" : nUsername,
       "password" : nPassword,
     });

@@ -34,7 +34,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 }
 
   submitDataRegister() async{
-    final responseData = await http.post("http://localhost:8080/Php/registasi.php",
+    final responseData = await http.post("http://10.0.2.2:8080/Php/registasi.php",
     body: {
       "username" : nUsername,
       "full_name": nFullName,
