@@ -11,4 +11,9 @@ BMI_calculator
 Calculator
 
 # week 3
-coming soon
+
+Login_server
+
+Kamus_aplikasi
+
+# week 4
