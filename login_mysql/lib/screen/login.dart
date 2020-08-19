@@ -20,6 +20,15 @@ class _LoginScreenState extends State<LoginScreen> {
   final _keyForm = GlobalKey<FormState>();
   String nUsername, nPassword;
 
+  //melihat password atau menutup password
+   bool _secureText = true;
+
+  showHide() {
+   setState(() {
+     _secureText = !_secureText;
+    });
+  }
+
   //cek tombol login
   checkLogin() {
     final form = _keyForm.currentState;
@@ -33,7 +42,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   // respon and request data to json
   submitDataLogin() async{
-    final responseData = await http.post("http://10.0.2.2:8080/Php/login.php",body: {
+    final responseData = await http.post("http://192.168.43.40:8000/Php/login.php",
+    body: {
       "username" : nUsername,
       "password" : nPassword,
     });
@@ -90,6 +100,16 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   } 
 
+  signOut() async {
+   SharedPreferences sharedpreferences = await SharedPreferences.getInstance();
+   setState(() {
+     sharedpreferences.setInt("value", null);
+     // ignore: deprecated_member_use
+     sharedpreferences.commit();
+     _loginStatus = statusLogin.notSignIn;
+   });
+ }
+
   @override
   void initState() { 
     super.initState();
@@ -142,15 +162,21 @@ class _LoginScreenState extends State<LoginScreen> {
                Container(
                 padding: EdgeInsets.fromLTRB(50, 0, 50, 0),
                 child: TextFormField(
-                obscureText: true,
+                obscureText: _secureText,
                 validator: (value) {
                   if (value.isEmpty) {
                     return 'Password harus di isi';
+                  }else if (value.length < 6) {
+                    return 'password  tidak boleh kurang dari 6 carakter';
                   }
                   return null;
                 },
                 onSaved: (value) => nPassword = value,
                 decoration: InputDecoration(
+                suffixIcon: IconButton(
+                   onPressed: showHide,
+                   icon: Icon(_secureText ? Icons.visibility_off : Icons.visibility),
+                 ),
                 hintText: 'password',
                 hintStyle: kColorField,
                 enabledBorder: UnderlineInputBorder(
@@ -206,7 +232,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
     break;
     case statusLogin.signIn : 
-    return HomeScreen();
+    return HomeScreen(signOut: signOut);
     break;
     }
   }

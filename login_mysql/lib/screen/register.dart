@@ -17,13 +17,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController cPassword = TextEditingController();
   TextEditingController cAlamat = TextEditingController();
   
-  List sex=["Male","Female"];
+  List sex=["Laki-laki","Perempuan"];
 
   String nUsername, nFullName, nEmail, nPassword, nAlamat;
   String gender = "";
 
   //menambahkan key form
   final _keyForm = GlobalKey<FormState>();
+
+  // show and hidden password
+   bool _secureText = true;
+
+  showHide() {
+   setState(() {
+     _secureText = !_secureText;
+    });
+  }
+
+  void pilihSex(String value){
+  setState(() {
+  gender = value;
+  });
+  }
   // check data saat pressed sign up
     checkForm(){
       final form = _keyForm.currentState;
@@ -34,7 +49,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 }
 
   submitDataRegister() async{
-    final responseData = await http.post("http://10.0.2.2:8080/Php/registasi.php",
+    final responseData = await http.post("http://192.168.43.40:8000/Php/registasi.php",
     body: {
       "username" : nUsername,
       "full_name": nFullName,
@@ -72,7 +87,7 @@ Row addRadioButton(int btnValue, String title) {
       onChanged: (value){
         setState(() {
           print(value);
-          gender=value;
+          pilihSex(value);
         });
       },
     ),
@@ -151,6 +166,8 @@ Row addRadioButton(int btnValue, String title) {
                 validator: (value) {
                   if (value.isEmpty) {
                     return 'Email tidak boleh kosong !!';
+                  }else if (!value.contains('@')){
+                    return 'mohon menggunakan email yang valid';
                   }
                   return null;
                 },
@@ -172,10 +189,12 @@ Row addRadioButton(int btnValue, String title) {
                Container(
                 padding: EdgeInsets.fromLTRB(50, 0, 50, 0),
                 child: TextFormField(
-                obscureText: true,
+                obscureText: _secureText,
                 validator: (value) {
                   if (value.isEmpty) {
                     return 'Password tidak boleh kosong !!';
+                  }else if (value.length < 6) {
+                    return 'password  tidak boleh kurang dari 6 carakter';
                   }
                   return null;
                 },
@@ -183,6 +202,10 @@ Row addRadioButton(int btnValue, String title) {
                 onSaved: (value) => nPassword = cPassword.text,
                 decoration: InputDecoration(
                 hintText: 'Password',
+                suffixIcon: IconButton(
+                   onPressed: showHide,
+                   icon: Icon(_secureText ? Icons.visibility_off : Icons.visibility),
+                 ),
                 hintStyle: kColorField,
                 enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: kColorGrey) 
@@ -230,8 +253,8 @@ Row addRadioButton(int btnValue, String title) {
                 Row(
                  mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    addRadioButton(0, 'Cowok'),
-                    addRadioButton(1, 'Cewek'),
+                    addRadioButton(0, 'Laki-laki'),
+                    addRadioButton(1, 'Perempuan'),
                   ],
                 ),
               ], 
