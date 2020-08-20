@@ -39,6 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
       print("tidak ada user");
     }
   }
+  
 
   // respon and request data to json
   submitDataLogin() async{
@@ -46,6 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
     body: {
       "username" : nUsername,
       "password" : nPassword,
+
     });
     final data = jsonDecode(responseData.body);
     int value = data['value'];
@@ -232,7 +234,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
     break;
     case statusLogin.signIn : 
-    return HomeScreen(signOut: signOut);
+    return HomeScreen(signOut: signOut,);
     break;
     }
   }

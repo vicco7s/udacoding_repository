@@ -1,16 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:login_mysql/components/containerpaint.dart';
 import 'package:login_mysql/constant/constant.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
+import 'package:login_mysql/model/model_user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
    final VoidCallback signOut;
-   HomeScreen ({this.signOut});
+   final String nama;
+   HomeScreen ({this.signOut,this.nama});
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<Welcome> listModel = [];
+  var loading = false;
+  Future<Null> getData() async {
+  setState(() {
+  loading = true;
+  });
+    final responseData =
+      await http.get("http://192.168.43.40:8000/Php/result.php");
+      if (responseData.statusCode == 200) {
+      final data = jsonDecode(responseData.body);
+    setState(() {
+      for (Map i in data) {
+      listModel.add(Welcome.fromJson(i));
+      }
+      loading = false;
+    });
+  }
+}
+  @override
+  void initState() {
+  super.initState();
+  getData();
+}
+
   signOut() {
    setState(() {
      widget.signOut();
@@ -23,12 +52,23 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: CustomPaint(
        painter: CurvePainter(),
-       child: Center(
          child: Container(
-            child: Column(
+           alignment: Alignment.center,
+            child: loading ? CircularProgressIndicator() :Column(
               children: [
                 Container(
-                  padding: EdgeInsets.fromLTRB(20, 50, 20, 0),
+                  padding: EdgeInsets.fromLTRB(20, 150, 20, 0),
+                  child: Card(
+                    elevation: 15.0,
+                    child: ListTile(
+                      title: Center(
+                        child: Text("Tentang Pengguna")
+                      ), 
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.fromLTRB(20, 30, 20, 0),
                   child: Card(
                     elevation: 15.0,
                     color: Colors.white,
@@ -49,7 +89,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           ListTile(
                            leading: Text('Alamat :'), 
-                           title: Text('---'),
+                           title: Container(
+                            child: Row(
+                            children: [
+                                Expanded(child: Text('----'))
+                              ], 
+                             ),
+                           )
                           ),
                           ListTile(
                            leading: Text('Tanggal Daftar :'), 
@@ -60,8 +106,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 30,),
-              Center(
+              SizedBox(height: 20,),
+              Container(
+                padding: EdgeInsets.fromLTRB(100, 0, 100, 0),
               child: GestureDetector(
               onTap: (){
                 setState(() {
@@ -69,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 });
               },
               child: Container(
-                padding: EdgeInsets.fromLTRB(100, 20, 100, 20),
+                padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
                 decoration: BoxDecoration(
                   color: kColorPink,
                  borderRadius: BorderRadius.circular(50) 
@@ -77,6 +124,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                  children: [
+                   Icon(Icons.exit_to_app,color: Colors.white,),
+                   SizedBox(width: 15,),
                    Text('Log Out',style: tColorButton,),
                  ], 
                 )
@@ -86,7 +135,6 @@ class _HomeScreenState extends State<HomeScreen> {
              ], 
             ),
          ),
-       ), 
       ),
     );
   }
