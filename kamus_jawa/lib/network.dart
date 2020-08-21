@@ -14,13 +14,5 @@ class Profil {
         jawa: json["jawa"],
   );
   }
-
-  // factory Profil.fromJson(Map<String, dynamic> json) {
-  //   return  Profil(
-  //     id: json['id'],
-  //     firstName: json['name'],
-  //     lastName: json['username'],
-  //   );
-  // }
 }
 
