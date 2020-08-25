@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:login_mysql/components/containerpaint.dart';
 import 'package:login_mysql/constant/constant.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -12,6 +15,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final RoundedLoadingButtonController _btnController = RoundedLoadingButtonController();
+
+  void _doSomething() async {
+    Timer(Duration(seconds: 3), () {
+        _btnController.success();
+        setState(() {
+          signOut();
+        });
+    });
+}
  
 
   signOut() {
@@ -36,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     elevation: 15.0,
                     child: ListTile(
                       title: Center(
-                        child: Text("Tentang Pengguna")
+                        child: Text("Selamat datang di halaman Dashboard")
                       ), 
                     ),
                   ),
@@ -49,63 +62,34 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Container(
                       child: Column(
                         children: [
-                          ListTile(
-                           leading: Text('Nama :'), 
-                           title: Text('---'),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center ,
+                           children: [
+                             Container(
+                               padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                               child: Image.asset(
+                                 'images/logo.png',width: 50,height: 50,color: kColorBlue,)),
+                           ], 
                           ),
-                          ListTile(
-                           leading: Text('Email :'), 
-                           title: Text('---'),
-                          ),
-                          ListTile(
-                           leading: Text('Gender :'), 
-                           title: Text('---'),
-                          ),
-                          ListTile(
-                           leading: Text('Alamat :'), 
-                           title: Container(
-                            child: Row(
-                            children: [
-                                Expanded(child: Text('----'))
-                              ], 
-                             ),
-                           )
-                          ),
-                          ListTile(
-                           leading: Text('Tanggal Daftar :'), 
-                           title: Text('---'),
-                          )
+                          SizedBox(height: 20,),
+                          Text(
+                            'hello'+' '+widget.nama+' !',
+                            style: TextStyle(fontSize: 30,color: kColorGrey,fontWeight: FontWeight.bold),
+                            ),
+                          SizedBox(height: 20,),
                       ],
                     ),
                   ),
                 ),
               ),
               SizedBox(height: 20,),
-              Container(
-                padding: EdgeInsets.fromLTRB(100, 0, 100, 0),
-              child: GestureDetector(
-              onTap: (){
-                setState(() {
-                  signOut();
-                });
-              },
-              child: Container(
-                padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
-                decoration: BoxDecoration(
-                  color: kColorPink,
-                 borderRadius: BorderRadius.circular(50) 
-                ), 
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                 children: [
-                   Icon(Icons.exit_to_app,color: Colors.white,),
-                   SizedBox(width: 15,),
-                   Text('Log Out',style: tColorButton,),
-                 ], 
-                )
-              ), 
-             ), 
-            ),
+              RoundedLoadingButton(
+                color: kColorPink,
+                child: Text('Log Out',style: TextStyle(color: Colors.white),),
+                controller: _btnController,
+                onPressed: (){_doSomething();},
+              ),
+              
              ], 
             ),
          ),

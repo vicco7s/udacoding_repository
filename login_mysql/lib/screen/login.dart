@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:login_mysql/components/containerpaint.dart';
@@ -5,6 +7,7 @@ import 'package:login_mysql/constant/constant.dart';
 import 'package:login_mysql/screen/homescreen.dart';
 import 'package:login_mysql/screen/register.dart';
 import 'package:http/http.dart' as http;
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,6 +21,7 @@ enum statusLogin {signIn, notSignIn}
 class _LoginScreenState extends State<LoginScreen> {
   statusLogin _loginStatus = statusLogin.notSignIn;
   final _keyForm = GlobalKey<FormState>();
+  final RoundedLoadingButtonController _btnController = RoundedLoadingButtonController();
   String nUsername, nPassword;
 
   //melihat password atau menutup password
@@ -30,20 +34,36 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   //cek tombol login
-  checkLogin() {
-    final form = _keyForm.currentState;
+  _doSomething() async {
+    Timer(Duration(seconds: 3), () {
+        final form = _keyForm.currentState; 
     if (form.validate()){
       form.save();
       submitDataLogin();
+      _btnController.success();
     }else {
-      print("tidak ada user");
+      showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (BuildContext context) {
+            return CupertinoAlertDialog(
+              title: Text('tidak ada User',style: TextStyle(fontSize: 20),),
+              content: Icon(Icons.error,color: Colors.red,size: 60,),
+            );
+          }
+        );
+      print('tidak terdaftar databases');
+      _btnController.reset();
     }
+    });
   }
+  
+  
   
 
   // respon and request data to json
   submitDataLogin() async{
-    final responseData = await http.post("http://192.168.43.40:8000/Php/login.php",
+    final responseData = await http.post("http://192.168.43.40/Php/login.php",
     body: {
       "username" : nUsername,
       "password" : nPassword,
@@ -67,14 +87,52 @@ class _LoginScreenState extends State<LoginScreen> {
     if (value == 1) {
       setState(() {
         //status login sebagai login
+        showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (BuildContext context) {
+            return CupertinoAlertDialog(
+              title: Text('login Succes',style: TextStyle(fontSize: 20)),
+              content: Icon(Icons.check,color: Colors.green,size: 60,),
+            );
+          }
+        );
+        _btnController.success();
         _loginStatus = statusLogin.signIn;
         // save data to prefarence pub package
         saveDataPref(value,dataIdUser,dataUsername,dataEmail,dataAlamat,dataGender,dataFullname,dataTanggalDaftar);
       });
     }else if (value == 2){
-      print(pesan);
+      setState(() {
+        showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (BuildContext context) {
+            return CupertinoAlertDialog(
+              title: Text(pesan,style: TextStyle(fontSize: 20)),
+              content: Icon(Icons.error,color: Colors.red,size: 60),
+            );
+          }
+        );
+        print(pesan);
+        _btnController.reset();
+      });
     }else{
-      print(pesan);
+      setState(() {
+        showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (BuildContext context) {
+            return CupertinoAlertDialog(
+              title: Text(pesan,style: TextStyle(fontSize: 20)),
+              content: Icon(Icons.error,color: Colors.red,size: 60,),
+            );
+          }
+        );
+        print(pesan);
+        _btnController.reset();
+      });
+      
     }
   } 
 
@@ -191,23 +249,12 @@ class _LoginScreenState extends State<LoginScreen> {
              ), 
             ),
             SizedBox(height: 20,),
-            Center(
-             child: GestureDetector(
-              onTap: (){
-                setState(() {
-                  checkLogin();
-                });
-              },
-              child: Container(
-                padding: EdgeInsets.fromLTRB(117, 20, 117, 20),
-                decoration: BoxDecoration(
-                  color: kColorPink,
-                 borderRadius: BorderRadius.circular(50) 
-                ), 
-                child: Text('Sign In',style: tColorButton,),
-              ), 
-             ), 
-            ),
+            RoundedLoadingButton(
+                color: kColorPink,
+                child: Text('Sign In',style: TextStyle(color: Colors.white),),
+                controller: _btnController,
+                onPressed: (){_doSomething();},
+              ),
             SizedBox(height: 130,),
             Container(
               padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
@@ -234,7 +281,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
     break;
     case statusLogin.signIn : 
-    return HomeScreen(signOut: signOut,);
+    return HomeScreen(signOut: signOut,nama: nUsername,);
     break;
     }
   }

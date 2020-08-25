@@ -1,8 +1,13 @@
+import 'dart:async';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:login_mysql/components/containerpaint.dart';
 import 'package:login_mysql/constant/constant.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -16,6 +21,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController cEmail = TextEditingController();
   TextEditingController cPassword = TextEditingController();
   TextEditingController cAlamat = TextEditingController();
+  final RoundedLoadingButtonController _btnController = RoundedLoadingButtonController();
+  
   
   List sex=["Laki-laki","Perempuan"];
 
@@ -40,16 +47,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
   });
   }
   // check data saat pressed sign up
-    checkForm(){
-      final form = _keyForm.currentState;
-      if(form.validate()){
+    checkForm() async {
+    Timer(Duration(seconds: 3), () {
+        final form = _keyForm.currentState; 
+    if (form.validate()){
       form.save();
       submitDataRegister();
+      _btnController.success();
+    }else {
+      showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (BuildContext context) {
+            return CupertinoAlertDialog(
+              title: Text('Gagal Registasi',style: TextStyle(fontSize: 20),),
+              content: Icon(Icons.error,color: Colors.red,size: 60,),
+            );
+          }
+        );
+      print('tidak terdaftar databases');
+      _btnController.reset();
+    }
+    });
   }
-}
 
   submitDataRegister() async{
-    final responseData = await http.post("http://192.168.43.40:8000/Php/registasi.php",
+    final responseData = await http.post("http://192.168.43.40/Php/registasi.php",
     body: {
       "username" : nUsername,
       "full_name": nFullName,
@@ -67,12 +90,45 @@ class _SignUpScreenState extends State<SignUpScreen> {
     //check value 1 or 0
     if (value == 1) {
       setState(() {
-        Navigator.pop(context);
+          showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (BuildContext context) {
+            return CupertinoAlertDialog(
+              title: Text('Berhasil Mendaftar',style: TextStyle(fontSize: 20),),
+              content: Icon(Icons.check,color: Colors.green,size: 60,),
+            );
+          }
+        );
+        _btnController.success();
+          Navigator.pop(context);
       });
     } else if (value == 2) {
-      print(pesan);
+       showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (BuildContext context) {
+            return CupertinoAlertDialog(
+              title: Text(pesan,style: TextStyle(fontSize: 20),),
+              content: Icon(Icons.error,color: Colors.red,size: 60,),
+            );
+          }
+        );
+
+        _btnController.reset();
     } else {
-      print(pesan);
+       showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (BuildContext context) {
+            return CupertinoAlertDialog(
+              title: Text(pesan,style: TextStyle(fontSize: 20),),
+              content: Icon(Icons.error,color: Colors.red,size: 60,),
+            );
+          }
+        );
+
+        _btnController.reset();
   }
 }
 
@@ -261,24 +317,13 @@ Row addRadioButton(int btnValue, String title) {
              ) 
             ),
             SizedBox(height: 10,),
-            Center(
-             child: GestureDetector(
-              onTap: (){
-                setState(() {
-                  checkForm();
-                });
-              },
-              child: Container(
-                padding: EdgeInsets.fromLTRB(117, 20, 117, 20),
-                decoration: BoxDecoration(
-                  color: kColorPink,
-                 borderRadius: BorderRadius.circular(50) 
-                ), 
-                child: Text('Sign Up',style: tColorButton,),
-              ), 
-             ), 
-            ),
-            SizedBox(height: 100,),
+           RoundedLoadingButton(
+                color: kColorPink,
+                child: Text('Sign In',style: TextStyle(color: Colors.white),),
+                controller: _btnController,
+                onPressed: (){checkForm();},
+              ),
+            SizedBox(height: 60,),
             Container(
               padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
               child: Row(
