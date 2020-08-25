@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/bmi_calculator/bmi_calculator.iml" filepath="$PROJECT_DIR$/bmi_calculator/bmi_calculator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/calculater/calculater.iml" filepath="$PROJECT_DIR$/calculater/calculater.iml" />
+      <module fileurl="file://$PROJECT_DIR$/login_mysql/android/app/src/debug/debug.iml" filepath="$PROJECT_DIR$/login_mysql/android/app/src/debug/debug.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kamus_jawa/kamus_jawa.iml" filepath="$PROJECT_DIR$/kamus_jawa/kamus_jawa.iml" />
+      <module fileurl="file://$PROJECT_DIR$/login_flutter/login_flutter.iml" filepath="$PROJECT_DIR$/login_flutter/login_flutter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/login_mysql/login_mysql.iml" filepath="$PROJECT_DIR$/login_mysql/login_mysql.iml" />
+      <module fileurl="file://$PROJECT_DIR$/login_mysql/android/app/src/profile/profile.iml" filepath="$PROJECT_DIR$/login_mysql/android/app/src/profile/profile.iml" />
+    </modules>
+  </component>
+</project>

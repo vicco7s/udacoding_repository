@@ -32,4 +32,4 @@ class Welcome {
         password: json["password"],
         alamat: json["alamat"],
         tglDaftar: json["tgl_daftar"],
-    );
+    );}

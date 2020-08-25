@@ -4,8 +4,8 @@ import 'package:login_mysql/constant/constant.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
-import 'package:login_mysql/model/model_user.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import '../model/network.dart';
 
 class HomeScreen extends StatefulWidget {
    final VoidCallback signOut;
