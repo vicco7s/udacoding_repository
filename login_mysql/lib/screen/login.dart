@@ -47,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
           barrierDismissible: true,
           builder: (BuildContext context) {
             return CupertinoAlertDialog(
-              title: Text('tidak ada User',style: TextStyle(fontSize: 20),),
+              title: Text('Gagal Login',style: TextStyle(fontSize: 20),),
               content: Icon(Icons.error,color: Colors.red,size: 60,),
             );
           }

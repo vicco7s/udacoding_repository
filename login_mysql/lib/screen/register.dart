@@ -53,7 +53,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (form.validate()){
       form.save();
       submitDataRegister();
-      _btnController.success();
     }else {
       showDialog(
           context: context,
@@ -90,16 +89,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     //check value 1 or 0
     if (value == 1) {
       setState(() {
-          showDialog(
-          context: context,
-          barrierDismissible: true,
-          builder: (BuildContext context) {
-            return CupertinoAlertDialog(
-              title: Text('Berhasil Mendaftar',style: TextStyle(fontSize: 20),),
-              content: Icon(Icons.check,color: Colors.green,size: 60,),
-            );
-          }
-        );
         _btnController.success();
           Navigator.pop(context);
       });
