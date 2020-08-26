@@ -58,9 +58,6 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
   
-  
-  
-
   // respon and request data to json
   submitDataLogin() async{
     final responseData = await http.post("http://192.168.43.40/Php/login.php",
