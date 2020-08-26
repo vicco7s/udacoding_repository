@@ -319,7 +319,7 @@ Row addRadioButton(int btnValue, String title) {
             SizedBox(height: 10,),
            RoundedLoadingButton(
                 color: kColorPink,
-                child: Text('Sign In',style: TextStyle(color: Colors.white),),
+                child: Text('Sign Up',style: TextStyle(color: Colors.white),),
                 controller: _btnController,
                 onPressed: (){checkForm();},
               ),

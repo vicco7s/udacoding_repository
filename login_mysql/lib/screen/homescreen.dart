@@ -19,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _doSomething() async {
     Timer(Duration(seconds: 3), () {
-        _btnController.success();
+        _btnController.reset();
         setState(() {
           signOut();
         });

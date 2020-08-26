@@ -19,8 +19,9 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.white,
       child: Center(
-        child: Image.asset("images/splashscreen.gif"), 
+        child: Image.asset("images/loading.gif"), 
       ),
     );
   }
