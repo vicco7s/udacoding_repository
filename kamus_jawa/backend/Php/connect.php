@@ -1,5 +1,5 @@
 <?php
-$connect = new mysqli("localhost","root", "", "db_universitas");
+$connect = new mysqli("localhost","root", "", "db_kamus");
 if ($connect) {
 // echo "database connected";
 } else {
