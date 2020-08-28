@@ -1,6 +1,6 @@
 
 
-final String url = 'http://192.168.43.40/kamus/result.php'; //url json
+final String url = 'http://192.168.43.40/Php/result.php'; //url json
 class Profil {
   final String idKamus;
   final String indo, jawa;
