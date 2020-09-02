@@ -18,4 +18,5 @@ Kamus_aplikasi
 
 # week 4
 
-coming soon
+Gallery App
+
