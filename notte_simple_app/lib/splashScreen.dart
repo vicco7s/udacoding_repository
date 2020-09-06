@@ -18,16 +18,19 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Center(
-        child: Column(
-          children: [
-            Image.asset("images/note.png"),
-            SizedBox(height: 20,),
-            Text('Catat Keseharian Anda disini !'),
-          ],
-        ), 
+    return Scaffold(
+      backgroundColor: Color(0xFFf7f7f7),
+          body: Center(
+          child: Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset("images/loading.gif",height: 100,width: 100),
+              SizedBox(height: 20,),
+              Text('Catat Keseharian Anda disini !', style: TextStyle(fontSize: 20,color: Colors.blue),),
+            ],
+          ), 
+        ),
       ),
     );
   }
