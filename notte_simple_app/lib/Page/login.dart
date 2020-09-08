@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:notte_simple_app/Page/note_home.dart';
 import 'package:notte_simple_app/Page/register.dart';
 import 'package:notte_simple_app/components/containerpaint.dart';
 import 'package:notte_simple_app/constant/constant.dart';
@@ -17,8 +18,9 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _keyForm = GlobalKey<FormState>();
-  TextEditingController username = TextEditingController();
-  TextEditingController password = TextEditingController();
+  TextEditingController user = TextEditingController();
+  TextEditingController pass = TextEditingController();
+  String username,password;
 
   //melihat password atau menutup password
    bool _secureText = true;
@@ -27,6 +29,63 @@ class _LoginPageState extends State<LoginPage> {
    setState(() {
      _secureText = !_secureText;
     });
+  }
+
+  Future checklogin() async {
+    final form = _keyForm.currentState;
+    if (form.validate()) {
+      form.save();
+      login();
+    } else {
+      showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (BuildContext context) {
+            return CupertinoAlertDialog(
+                title: Text('Data Belum terisi',style: TextStyle(fontSize: 20),),
+                content: Icon(Icons.warning,color: Colors.red,size: 60,),
+              );
+          }
+        );
+    }
+  }
+
+  Future login() async {
+    var url = ('http://192.168.43.40/backend_note/login.php');
+    final response = await http.post(url, body: {
+      "username" : username,
+      "password" : password,
+    });
+    final data = jsonDecode(response.body);
+    int value = data['value'];
+    String msg = data['message'];
+
+    if (value == 1) {
+      showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (BuildContext context) {
+            return CupertinoAlertDialog(
+                title: Text('$msg',style: TextStyle(fontSize: 20),),
+                content: Icon(Icons.check,color: Colors.green,size: 60,),
+              );
+          }
+        );
+        Navigator.push(context, CupertinoPageRoute(builder: (context) => HomeNotePage()));
+        
+    } else {
+      showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (BuildContext context) {
+            return CupertinoAlertDialog(
+                title: Text('$msg',style: TextStyle(fontSize: 20),),
+                content: Icon(Icons.warning,color: Colors.red,size: 60,),
+              );
+          }
+        );
+    }
+
   }
 
 
@@ -54,7 +113,8 @@ class _LoginPageState extends State<LoginPage> {
                   }
                   return null;
                 },
-                onSaved: (value) => username,
+                controller: user,
+                onSaved: (value) => username = user.text,
                 decoration: InputDecoration(
                 hintText: 'username',
                 hintStyle: kColorField,
@@ -80,7 +140,8 @@ class _LoginPageState extends State<LoginPage> {
                   }
                   return null;
                 },
-                onSaved: (value) => password,
+                controller: pass,
+                onSaved: (value) => password = pass.text,
                 decoration: InputDecoration(
                 suffixIcon: IconButton(
                    onPressed: showHide,
@@ -99,7 +160,9 @@ class _LoginPageState extends State<LoginPage> {
             ),
             SizedBox(height: 50,),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                checklogin();
+              },
               child: Container(
                 padding: EdgeInsets.fromLTRB(145, 20, 145, 20),
                 decoration: decorenButton,

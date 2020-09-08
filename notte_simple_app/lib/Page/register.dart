@@ -6,7 +6,6 @@ import 'package:http/http.dart' as http;
 import 'package:notte_simple_app/components/containerpaint.dart';
 import 'package:notte_simple_app/constant/constant.dart';
 import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -16,9 +15,11 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   final _keyForm = GlobalKey<FormState>();
-  TextEditingController username = TextEditingController();
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
+  TextEditingController user = TextEditingController();
+  TextEditingController mail = TextEditingController();
+  TextEditingController pass = TextEditingController();
+  String username,email,password;
+
 
   //melihat password atau menutup password
    bool _secureText = true;
@@ -28,7 +29,73 @@ class _SignUpPageState extends State<SignUpPage> {
      _secureText = !_secureText;
     });
   }
+  Future checForm() async {
+    final form = _keyForm.currentState; 
+    if(form.validate()) {
+      form.save();
+      register();
+    } else {
+      showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (BuildContext context) {
+            return CupertinoAlertDialog(
+              title: Text('Gagal !',style: TextStyle(fontSize: 20),),
+              content: Icon(Icons.error,color: Colors.red,size: 60,),
+            );
+          }
+        );
+    }
+  }
 
+  Future register() async {
+    var url = ('http://192.168.43.40/backend_note/register.php');
+    final response = await http.post(url , body: {
+      "username" : username,
+      "email" : email,
+      "password" : password,
+    });
+    final data = jsonDecode(response.body);
+    int value = data['value'];
+    String msg = data['message'];
+
+    if (value == 1 ) {
+      setState(() {
+        showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (BuildContext context) {
+            return CupertinoAlertDialog(
+                title: Text('$msg',style: TextStyle(fontSize: 20),),
+                content: Icon(Icons.check,color: Colors.green,size: 60,),
+              );
+          }
+        );
+      });
+    }else if (value == 2 ) {
+      showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (BuildContext context) {
+            return CupertinoAlertDialog(
+              title: Text('$msg',style: TextStyle(fontSize: 20),),
+              content: Icon(Icons.error,color: Colors.red,size: 60,),
+            );
+          }
+        );
+      }else {
+        showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (BuildContext context) {
+            return CupertinoAlertDialog(
+              title: Text('$msg',style: TextStyle(fontSize: 20),),
+              content: Icon(Icons.error,color: Colors.red,size: 60,),
+            );
+          }
+        );
+      }
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -48,13 +115,14 @@ class _SignUpPageState extends State<SignUpPage> {
                Container(
                 padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
                 child: TextFormField(
-                validator: (value) {
+                  validator: (value) {
                   if (value.isEmpty) {
-                    return 'username harus di isi';
+                    return 'Username tidak boleh kosong !!';
                   }
                   return null;
                 },
-                onSaved: (value) => username,
+                controller: user,
+                onSaved: (value) => username = user.text,
                 decoration: InputDecoration(
                 hintText: 'username',
                 hintStyle: kColorField,
@@ -71,15 +139,16 @@ class _SignUpPageState extends State<SignUpPage> {
              Container(
                 padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
                 child: TextFormField(
-                validator: (value) {
+                  validator: (value) {
                   if (value.isEmpty) {
-                    return 'Email harus di isi';
+                    return 'Email tidak boleh kosong !!';
                   }else if (!value.contains('@')){
                     return 'mohon menggunakan email yang valid';
                   }
                   return null;
                 },
-                onSaved: (value) => email,
+                controller: mail,
+                onSaved: (value) => email = mail.text,
                 decoration: InputDecoration(
                 hintText: 'Email',
                 hintStyle: kColorField,
@@ -96,16 +165,17 @@ class _SignUpPageState extends State<SignUpPage> {
                Container(
                 padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
                 child: TextFormField(
-                obscureText: _secureText,
-                validator: (value) {
+                  validator:  (value) {
                   if (value.isEmpty) {
-                    return 'Password harus di isi';
+                    return 'Password tidak boleh kosong !!';
                   }else if (value.length < 6) {
                     return 'password  tidak boleh kurang dari 6 carakter';
                   }
                   return null;
                 },
-                onSaved: (value) => password,
+                obscureText: _secureText,
+                controller: pass,
+                onSaved: (value) => password = pass.text,
                 decoration: InputDecoration(
                 suffixIcon: IconButton(
                    onPressed: showHide,
@@ -124,7 +194,11 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
             SizedBox(height: 20,),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                setState(() {
+                  checForm();
+                });
+              },
               child: Container(
                 padding: EdgeInsets.fromLTRB(145, 20, 145, 20),
                 decoration:decorenButton,
