@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notte_simple_app/constant/constant.dart';
 
 
 
@@ -7,7 +8,7 @@ class CurvePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint();
-    paint.color = Colors.blue;
+    paint.color = kColorBlue;
     paint.style = PaintingStyle.fill; // Change this to fill
 
     var path = Path();

@@ -15,8 +15,9 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 //deklarasi sebuah variable
-
+enum statusLogin {signIn, notSignIn}
 class _LoginPageState extends State<LoginPage> {
+    statusLogin _loginStatus = statusLogin.notSignIn;
   final _keyForm = GlobalKey<FormState>();
   TextEditingController user = TextEditingController();
   TextEditingController pass = TextEditingController();
@@ -60,6 +61,10 @@ class _LoginPageState extends State<LoginPage> {
     int value = data['value'];
     String msg = data['message'];
 
+    String dataId = data['id'];
+    String dataUsername = data['username'];
+    String dataEmail = data['email'];
+
     if (value == 1) {
       showDialog(
           context: context,
@@ -71,7 +76,9 @@ class _LoginPageState extends State<LoginPage> {
               );
           }
         );
-        Navigator.push(context, CupertinoPageRoute(builder: (context) => HomeNotePage()));
+        _loginStatus = statusLogin.signIn;
+        saveDataPref(value, dataUsername, dataId, dataEmail);
+        // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeNotePage()));
         
     } else {
       showDialog(
@@ -85,12 +92,47 @@ class _LoginPageState extends State<LoginPage> {
           }
         );
     }
+  }
 
+  saveDataPref(int value, String username,id,email )async{
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    setState(() {
+      sharedPreferences.setInt("value", value);
+      sharedPreferences.setString("username", username);
+      sharedPreferences.setString("id", id);
+      sharedPreferences.setString("email", email);
+    });
+  } 
+
+  getDataPref() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    setState(() {
+      int values = sharedPreferences.getInt("value");
+      _loginStatus = values == 1 ? statusLogin.signIn : statusLogin.notSignIn;
+    });
+  } 
+  signOut() async {
+   SharedPreferences sharedpreferences = await SharedPreferences.getInstance();
+   setState(() {
+     sharedpreferences.setInt("value", null);
+     // ignore: deprecated_member_use
+     sharedpreferences.commit();
+     _loginStatus = statusLogin.notSignIn;
+   });
+ }
+
+  @override
+  void initState() { 
+    super.initState();
+    getDataPref();
   }
 
 
   @override
+  // ignore: missing_return
   Widget build(BuildContext context) {
+    switch (_loginStatus) {
+      case statusLogin.notSignIn :
       return Scaffold(
       body: Form(
         key: _keyForm,
@@ -193,6 +235,11 @@ class _LoginPageState extends State<LoginPage> {
         ),
       )
     );
+    break;
+    case statusLogin.signIn : 
+    return HomeNotePage(signOut: signOut,);
+    break;
   }
 }
 
+}

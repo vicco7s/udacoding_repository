@@ -1,38 +1,54 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
+import 'package:notte_simple_app/components/containerpaint.dart';
 import 'dart:convert';
 
+import 'package:notte_simple_app/constant/constant.dart';
+import 'package:notte_simple_app/screen/add_note.dart';
+import 'package:notte_simple_app/screen/detail_note.dart';
+
 class HomeNotePage extends StatefulWidget {
+  final VoidCallback signOut;
+  HomeNotePage({this.signOut});
   @override
   _HomeNotePageState createState() => _HomeNotePageState();
 }
 
 class _HomeNotePageState extends State<HomeNotePage> {
   Future<List> getData() async {
-    final response =
-        await http.get("http://192.168.1.4/flutter_notes/data_notes_awal.php");
+    final response = await http.get("http://192.168.43.40/backend_note/home_note.php");
     return json.decode(response.body);
   }
 
+   signOut() {
+   setState(() {
+     widget.signOut();
+   });
+ }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text("Catetan Bu Tejo")),
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        title: Text('Notte App',style: kColorText,),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.exit_to_app,color: kColorBlue,), 
+            onPressed: (){
+              signOut();
+            }
+          )
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.of(context).push(
-            MaterialPageRoute(builder: (BuildContext context) => TambahData())),
-        child: Icon(Icons.add),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: FutureBuilder<List>(
         future: getData(),
         builder: (context, snapshot) {
           if (snapshot.hasError) print(snapshot.error);
           return snapshot.hasData
-              ? DataNotes(list: snapshot.data)
+              ? NoteHome(list: snapshot.data)
               : Center(
                   child: CircularProgressIndicator(),
                 );
@@ -42,256 +58,92 @@ class _HomeNotePageState extends State<HomeNotePage> {
   }
 }
 
-class DataNotes extends StatelessWidget {
-  final List list;
-  DataNotes({this.list});
+class NoteHome extends StatefulWidget {
+  List list;
+  int index;
+  NoteHome({this.list,this.index});
+  @override
+  _NoteHomeState createState() => _NoteHomeState();
+}
+
+class _NoteHomeState extends State<NoteHome> {
+
+  void deleteNote() async {
+    var url = "http://192.168.43.40/backend_note/delete_data.php";
+    http.post(url, body: {'id': widget.list[widget.index]['id']});
+  }
+ void notteDelete() async {
+    showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (BuildContext context) {
+            return CupertinoAlertDialog(
+              title: Text('Catetan mu akan Di hapus nih ?',style: TextStyle(fontSize: 20),),
+              // content: Icon(Icons.error,color: Colors.red,size: 60,),
+              actions: [
+                FlatButton(
+                  onPressed: (){
+                    setState(() {
+                      deleteNote();
+                    });
+                  },
+                  child: Text("Hapus Aja deh ",style: alerTextH,)),
+                FlatButton(
+                  onPressed: () => Navigator.pop(context), 
+                  child: Text('Eh Jangan deh',style: alerTextT,))
+              ],
+            );
+          }
+        );
+  }
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: list == null ? 0 : list.length,
-      itemBuilder: (context, i) {
-        return Container(
-          padding: const EdgeInsets.all(10.0),
-          child: GestureDetector(
-            onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (BuildContext context) => DetailPage(
-                      list: list,
-                      index: i,
-                    ))),
-            child: Container(
-              child: Card(
-                child: ListTile(
-                  title: Text(list[i]['judul']),
-                  leading: Icon(
-                    Icons.book,
-                    color: Colors.blue,
+    return CustomPaint(
+      painter: CurvePainter(),
+      child: Column(
+          children: [
+           Expanded(
+             child: ListView.builder(
+                itemCount: widget.list == null ? 0 : widget.list.length,
+                itemBuilder: (context, i) {
+                return Container(
+                  padding: EdgeInsets.fromLTRB(10, 5, 10, 0),
+                  child: GestureDetector(
+                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                        builder: (BuildContext context) => DetailNote(
+                              list: widget.list,
+                              index: i,
+                            ))),
+                    child: Container(
+                      child: Card(
+                        elevation: 20.0,
+                        child: ListTile(
+                          title: Text(widget.list[i]['judul'],style: kColorField,),
+                          subtitle: Text(widget.list[i]['isi']),
+                          trailing: IconButton(icon: iconNote, onPressed: () => notteDelete()),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                 },
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, CupertinoPageRoute(builder: (context) => AddNote()));
+                  },
+                  child: Container(
+                    padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
+                    decoration: buttonGestures,
+                    child: Icon(Icons.add,size: 40,color: kColorBlue,),
                   ),
                 ),
               ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
-
-class DetailPage extends StatefulWidget {
-  List list;
-  int index;
-  DetailPage({this.index, this.list});
-  @override
-  _DetailPageState createState() => _DetailPageState();
-}
-
-class _DetailPageState extends State<DetailPage> {
-  void deleteData() {
-    var url = "http://192.168.1.4/flutter_notes/hapus_data.php";
-    http.post(url, body: {'id': widget.list[widget.index]['id']});
-  }
-
-  void hapusData() {
-    AlertDialog alertDialog = new AlertDialog(
-      content: Text(
-          "arep ngapus catetan iki ${widget.list[widget.index]['judul']} ??"),
-      actions: [
-        RaisedButton(
-            color: Colors.blue[200],
-            child: Text("hapus wae"),
-            onPressed: () {
-              deleteData();
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (BuildContext context) => HomeNotePage(),
-              ));
-            }),
-        RaisedButton(
-          color: Colors.blue[200],
-          child: Text("ojo dihapus"),
-          onPressed: () => Navigator.pop(context),
-        )
-      ],
-    );
-    showDialog(context: context, child: alertDialog);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomPadding: false,
-      appBar: AppBar(title: Text("${widget.list[widget.index]['judul']}")),
-      body: Container(
-        padding: EdgeInsets.all(10.0),
-        child: Column(
-          children: [
-            Text(
-              widget.list[widget.index]['judul'],
-              style: TextStyle(
-                  fontSize: 35.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.red),
-            ),
-            SizedBox(height: 30),
-            Container(
-                padding: EdgeInsets.fromLTRB(10, 0, 0, 10),
-                color: Colors.blueGrey[200],
-                child: Center(
-                  child: Text(
-                    widget.list[widget.index]['isi'],
-                    style:
-                        TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                  ),
-                )),
-            SizedBox(
-              height: 200,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                RaisedButton.icon(
-                    color: Colors.blue[200],
-                    onPressed: () => hapusData(),
-                    icon: Icon(Icons.restore_from_trash),
-                    label: Text("hapus")),
-                RaisedButton.icon(
-                  onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => EditData(
-                      list: widget.list,
-                      index: widget.index,
-                    ),
-                  )),
-                  icon: Icon(Icons.edit),
-                  label: Text("edit"),
-                  color: Colors.blue[200],
-                )
-              ],
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class TambahData extends StatefulWidget {
-  @override
-  _TambahDataState createState() => _TambahDataState();
-}
-
-class _TambahDataState extends State<TambahData> {
-  TextEditingController controllerJudul = TextEditingController();
-  TextEditingController controllerIsi = TextEditingController();
-
-  void addData() {
-    var url = "http://192.168.1.4/flutter_notes/tambah_data.php";
-    http.post(url, body: {
-      "judul": controllerJudul.text,
-      "isi": controllerIsi.text,
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("halaman data"),
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(10.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: controllerJudul,
-              decoration: InputDecoration(
-                  hintText: "masukkan judul", labelText: "judul"),
-            ),
-            TextField(
-              controller: controllerIsi,
-              decoration:
-                  InputDecoration(hintText: "isi ", labelText: "isi catetan"),
-            ),
-            SizedBox(height: 200),
-            RaisedButton.icon(
-              onPressed: () {
-                addData();
-                Navigator.pop(context);
-              },
-              icon: Icon(Icons.save),
-              label: Text("save"),
-              color: Colors.blue[200],
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class EditData extends StatefulWidget {
-  EditData({this.list, this.index});
-  final List list;
-  final int index;
-  @override
-  _EditDataState createState() => _EditDataState();
-}
-
-class _EditDataState extends State<EditData> {
-  TextEditingController controllerJudul;
-  TextEditingController controllerIsi;
-
-  void editData() {
-    var url = "http://192.168.1.4/flutter_notes/edit_data.php";
-    http.post(url, body: {
-      "id": widget.list[widget.index]['id'],
-      "judul": controllerJudul.text,
-      "isi": controllerIsi.text,
-    });
-  }
-
-  @override
-  void initState() {
-    controllerJudul =
-        TextEditingController(text: widget.list[widget.index]['judul']);
-    controllerIsi =
-        TextEditingController(text: widget.list[widget.index]['isi']);
-
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("edit"),
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(10.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: controllerJudul,
-              decoration: InputDecoration(
-                  hintText: "masukkan judul", labelText: "judul"),
-            ),
-            TextField(
-              controller: controllerIsi,
-              decoration:
-                  InputDecoration(hintText: "isi ", labelText: "isi catetan"),
-            ),
-            SizedBox(height: 200),
-            RaisedButton.icon(
-              onPressed: () {
-                editData();
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => HomeNotePage(),
-                ));
-              },
-              icon: Icon(Icons.save),
-              label: Text("edit"),
-              color: Colors.blue[200],
-            )
-          ],
-        ),
-      ),
+          ], 
+         ),
     );
   }
 }
