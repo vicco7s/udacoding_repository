@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:notte_simple_app/Page/note_home.dart';
 import 'package:notte_simple_app/components/containerpaint.dart';
 import 'package:notte_simple_app/constant/constant.dart';
 
@@ -15,8 +17,7 @@ class _AddNoteState extends State<AddNote> {
 
   
     void addData() async {
-    var url = "http://192.168.43.40/backend_note/add_data.php";
-    http.post(url, body: {
+    http.post("http://192.168.43.40/backend_note/add_data.php", body: {
       "judul": judul.text,
       "isi": isi.text,
     });
@@ -85,8 +86,11 @@ class _AddNoteState extends State<AddNote> {
         SizedBox(height: 40,),
         GestureDetector(
             onTap: () {
-              addData();
-              Navigator.pop(context);
+              setState(() {
+                addData();
+              });
+              Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (context) => HomeNotePage()),
+               (route) => false);
             },
           child: Container(
             padding: EdgeInsets.fromLTRB(10, 10, 10, 10),

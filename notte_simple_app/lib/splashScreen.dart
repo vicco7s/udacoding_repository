@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:notte_simple_app/Page/login.dart';
+import 'package:notte_simple_app/constant/constant.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -19,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFf7f7f7),
+      backgroundColor: Colors.grey[200],
           body: Center(
           child: Container(
             child: Column(
@@ -27,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
             children: [
               Image.asset("images/loading.gif",height: 100,width: 100),
               SizedBox(height: 20,),
-              Text('Catat Keseharian Anda disini !', style: TextStyle(fontSize: 20,color: Colors.blue),),
+              Text('Catat Keseharian Anda disini !', style: TextStyle(fontSize: 20,color: kColorBlue),),
             ],
           ), 
         ),

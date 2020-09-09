@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 const kColorBlue = Color(0xff6168e9);
 const kColorPink = Color(0xfff67eae);
@@ -12,6 +11,10 @@ const tColorButton = TextStyle(
 );
 
 const kColorField = TextStyle(
+  color: kColorGrey, 
+  fontWeight: FontWeight.bold,
+);
+const kColorNote = TextStyle(
   color: Colors.black, 
   fontWeight: FontWeight.bold,
 );
@@ -60,7 +63,7 @@ final buttonGestures = BoxDecoration(
 );
 
 final iconNote = Icon(
-  Icons.delete,
+  Icons.arrow_forward_ios,
   color: kColorPink,
 );
 

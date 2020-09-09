@@ -1,8 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:notte_simple_app/Page/note_home.dart';
 import 'package:http/http.dart' as http;
-import 'package:notte_simple_app/screen/edit_note.dart';
+import 'package:notte_simple_app/components/containerpaint.dart';
+import 'package:notte_simple_app/constant/constant.dart';
 
+// ignore: must_be_immutable
 class DetailNote extends StatefulWidget {
   List list;
   int index;
@@ -13,57 +16,173 @@ class DetailNote extends StatefulWidget {
 
 class _DetailNoteState extends State<DetailNote> {
 
+  TextEditingController judul;
+  TextEditingController isi;
+
+  final maxLines = 5;
+
+  void deleteNote() async {
+    var url = "http://192.168.43.40/backend_note/delete_data.php";
+    http.post(url, body: {
+       "id": widget.list[widget.index]['id'],
+      });
+  }
+ void notteDelete() {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: Text('Catetan mu akan Di hapus nih ?',style: TextStyle(fontSize: 20),),
+          actions: [
+            FlatButton(
+              onPressed: (){
+                setState(() {
+                  deleteNote();
+                });
+                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomeNotePage()), (route) => false);
+              },
+              child: Text("Hapus Aja deh ",style: alerTextH,)),
+            FlatButton(
+              onPressed: () => Navigator.pop(context), 
+              child: Text('Eh Jangan deh',style: alerTextT,))
+          ],
+        );
+      }
+    );
+  }
+
+  void updateNote() async {
+    var url = "http://192.168.43.40/backend_note/edit_data.php";
+    http.post(url, body: {
+      "id": widget.list[widget.index]['id'],
+      "judul": judul.text,
+      "isi": isi.text,
+    });
+  }
+
+  void notteUpdate() {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: Text('Yakin sudah kamu perbarui catatan mu ?',style: TextStyle(fontSize: 20),),
+          actions: [
+            FlatButton(
+              onPressed: (){
+                setState(() {
+                  updateNote();
+                });
+                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomeNotePage()), (route) => false);
+              },
+              child: Text("Sudah kok !",style: alerTextH,)),
+            FlatButton(
+              onPressed: () => Navigator.pop(context), 
+              child: Text('Cek lagi deh',style: alerTextT,))
+          ],
+        );
+      }
+    );
+  }
+
+  @override
+  void initState() {
+    judul = TextEditingController(text: widget.list[widget.index]['judul']);
+    isi = TextEditingController(text: widget.list[widget.index]['isi']);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
-      appBar: AppBar(title: Text("${widget.list[widget.index]['judul']}")),
-      body: Container(
-        padding: EdgeInsets.all(10.0),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,color: kColorBlue,), 
+            onPressed: () {Navigator.pop(context);}
+          ),
+        centerTitle: true,
+        title: Text("Catatan Anda",style: kColorText,),
+      ),
+      body: CustomPaint(
+        painter: CurvePainter(),
         child: Column(
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              widget.list[widget.index]['judul'],
-              style: TextStyle(
-                  fontSize: 35.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.red),
-            ),
-            SizedBox(height: 30),
+           Column(
+            children: [
             Container(
-                padding: EdgeInsets.fromLTRB(10, 0, 0, 10),
-                color: Colors.blueGrey[200],
-                child: Center(
-                  child: Text(
-                    widget.list[widget.index]['isi'],
-                    style:
-                        TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+              padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+              child: Card(
+                elevation: 20,
+                child: Container(
+                margin: EdgeInsets.all(10),
+                height: maxLines * 10.0,
+                child: TextFormField(
+                  controller: judul,
+                  maxLines: maxLines,
+                  decoration: InputDecoration(
+                    hintText: "Judul ?",
+                    fillColor: Colors.white,
+                    filled: true,
                   ),
-                )),
-            SizedBox(
-              height: 200,
+                ),
+              ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                RaisedButton.icon(
-                    color: Colors.blue[200],
-                    onPressed: () {},
-                    icon: Icon(Icons.restore_from_trash),
-                    label: Text("hapus")),
-                RaisedButton.icon(
-                  onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => EditNote(
-                      list: widget.list,
-                      index: widget.index,
+          ),
+            Container(
+              padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+              child: Card(
+                elevation: 20,
+                child: Container(
+                margin: EdgeInsets.all(10),
+                height: maxLines * 24.0,
+                child: TextFormField(
+                  controller: isi,
+                  maxLines: maxLines,
+                  decoration: InputDecoration(
+                    hintText: "Isikan yang anda pikirkan ?",
+                    fillColor: Colors.white,
+                    filled: true,
                     ),
-                  )),
-                  icon: Icon(Icons.edit),
-                  label: Text("edit"),
-                  color: Colors.blue[200],
-                )
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 40,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            GestureDetector(
+                onTap: () {
+                  setState(() {
+                    notteDelete();
+                  });
+                },
+              child: Container(
+                padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                decoration: buttonGestures,
+                child: Icon(Icons.delete,size: 40,color: kColorPink,),
+                  ),
+                ),
+                GestureDetector(
+                onTap: () {
+                  setState(() {
+                    notteUpdate();
+                  });
+                },
+              child: Container(
+                padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                decoration: buttonGestures,
+                child: Icon(Icons.save,size: 40,color: kColorBlue,),
+                  ),
+                ),
               ],
-            )
+            ),
           ],
         ),
       ),

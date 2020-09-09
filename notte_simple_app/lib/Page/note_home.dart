@@ -58,44 +58,18 @@ class _HomeNotePageState extends State<HomeNotePage> {
   }
 }
 
+// ignore: must_be_immutable
 class NoteHome extends StatefulWidget {
   List list;
-  int index;
-  NoteHome({this.list,this.index});
+  // int index;
+  NoteHome({this.list});
   @override
   _NoteHomeState createState() => _NoteHomeState();
 }
 
 class _NoteHomeState extends State<NoteHome> {
 
-  void deleteNote() async {
-    var url = "http://192.168.43.40/backend_note/delete_data.php";
-    http.post(url, body: {'id': widget.list[widget.index]['id']});
-  }
- void notteDelete() async {
-    showDialog(
-          context: context,
-          barrierDismissible: true,
-          builder: (BuildContext context) {
-            return CupertinoAlertDialog(
-              title: Text('Catetan mu akan Di hapus nih ?',style: TextStyle(fontSize: 20),),
-              // content: Icon(Icons.error,color: Colors.red,size: 60,),
-              actions: [
-                FlatButton(
-                  onPressed: (){
-                    setState(() {
-                      deleteNote();
-                    });
-                  },
-                  child: Text("Hapus Aja deh ",style: alerTextH,)),
-                FlatButton(
-                  onPressed: () => Navigator.pop(context), 
-                  child: Text('Eh Jangan deh',style: alerTextT,))
-              ],
-            );
-          }
-        );
-  }
+  
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
@@ -118,9 +92,9 @@ class _NoteHomeState extends State<NoteHome> {
                       child: Card(
                         elevation: 20.0,
                         child: ListTile(
-                          title: Text(widget.list[i]['judul'],style: kColorField,),
+                          title: Text(widget.list[i]['judul'],style: kColorNote,),
                           subtitle: Text(widget.list[i]['isi']),
-                          trailing: IconButton(icon: iconNote, onPressed: () => notteDelete()),
+                          trailing: iconNote,
                           ),
                         ),
                       ),
