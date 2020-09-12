@@ -23,6 +23,11 @@ const kColorText = TextStyle(
   fontWeight: FontWeight.bold,
 );
 
+const ktColorText = TextStyle(
+  color: kColorPink, 
+  fontWeight: FontWeight.bold,
+);
+
 const tButtonColor = TextStyle(
   color: Colors.white,
 );

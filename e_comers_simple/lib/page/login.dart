@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:e_comers_simple/components/componen.dart';
 import 'package:e_comers_simple/constant/constant.dart';
 import 'package:e_comers_simple/page/RegisterPage.dart';
+import 'package:e_comers_simple/page/homepage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -236,7 +237,7 @@ class _LoginPageState extends State<LoginPage> {
     );
     break;
     case statusLogin.signIn : 
-    // return HomeNotePage(signOut: signOut,);
+    return HomePage(signOut: signOut,);
     break;
   }
 }

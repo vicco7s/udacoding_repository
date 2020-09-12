@@ -1,8 +1,7 @@
 import 'package:e_comers_simple/constant/constant.dart';
-import 'package:e_comers_simple/page/homepage.dart';
 import 'package:e_comers_simple/page/login.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
@@ -17,9 +16,7 @@ class _IntroDuctionState extends State<IntroDuction> {
    final introKey = GlobalKey<IntroductionScreenState>();
 
   void _onIntroEnd(context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => LoginPage()),
-    );
+    Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (context) => LoginPage()), (route) => false);
   }
 
   Widget _buildImage(String imageName) {
@@ -44,7 +41,7 @@ class _IntroDuctionState extends State<IntroDuction> {
         key: introKey,
         pages: [
           PageViewModel(
-            title: "Belanja Mudah",
+            title: "Hei Selamat Datang",
             body:"Daripada harus membeli secara offline, Beli aja dari Smartphone.",
             image: _buildImage('undraw_empty_cart_co35'),
             decoration: pageDecoration,
