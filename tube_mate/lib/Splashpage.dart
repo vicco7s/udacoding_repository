@@ -24,9 +24,7 @@ class _SplashPageState extends State<SplashPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Image.asset("images/loading.gif",height: 100,width: 100),
-              SizedBox(height: 20,),
-              Text('Catat Keseharian Anda disini !',),
+              Image.asset("images/logo.png",height: 150,width: 150,color: Colors.red[600],),
             ],
           ), 
         ),
@@ -34,7 +32,7 @@ class _SplashPageState extends State<SplashPage> {
     );
   }
   Future<Timer> startTimer() async {
-    return Timer(Duration(seconds: 3),onDone);
+    return Timer(Duration(seconds: 5),onDone);
   }
   void onDone() {
     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
