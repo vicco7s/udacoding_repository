@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:karyawan_app/model/loginmodel.dart';
+import 'package:mahasiswa_app/model/loginmodel.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -7,7 +7,7 @@ import 'package:path/path.dart';
 
 class DataHapLogin {
 
-  static final DataHapLogin _instanse = new DataHapLogin.internal();
+  static final DataHapLogin _instanse = DataHapLogin.internal();
   factory DataHapLogin() => _instanse;
 
   final String tableName = 'users';

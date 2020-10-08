@@ -1,36 +1,49 @@
+
 import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:karyawan_app/components/componen.dart';
-import 'package:karyawan_app/constant/cons.dart';
-import 'package:karyawan_app/helper/userlogin.dart';
-import 'package:karyawan_app/model/loginmodel.dart';
-import 'package:karyawan_app/page/HomeScreen.dart';
-import 'package:karyawan_app/page/register.dart';
-import 'package:karyawan_app/widget/textfield.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mahasiswa_app/components/componen.dart';
+import 'package:mahasiswa_app/constant/cons.dart';
+import 'package:mahasiswa_app/helper/userlogin.dart';
+import 'package:mahasiswa_app/model/loginmodel.dart';
+import 'package:mahasiswa_app/page/HomeScreen.dart';
+import 'package:mahasiswa_app/page/register.dart';
+import 'package:mahasiswa_app/widget/textfield.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
 }
-//deklarasi sebuah variable
-enum statusLogin {signIn, notSignIn}
+
 class _LoginPageState extends State<LoginPage> {
-    statusLogin _loginStatus = statusLogin.notSignIn;
   final _keyForm = GlobalKey<FormState>();
   TextEditingController user = TextEditingController();
   TextEditingController pass = TextEditingController();
+  FToast fToast;
 
   //melihat password atau menutup password
-   bool _secureText = true;
+  final RoundedLoadingButtonController _btnController = RoundedLoadingButtonController();
 
-  showHide() {
-   setState(() {
-     _secureText = !_secureText;
+  void _loadButton() async {
+    Timer(Duration(seconds: 3), () {
+      _btnController.reset();
+      if(_keyForm.currentState.validate()){
+          sumbitLogin();
+        }
     });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fToast = FToast();
+    fToast.init(context); 
   }
 
   @override
@@ -53,6 +66,7 @@ class _LoginPageState extends State<LoginPage> {
                 padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
                 child: TextFieldV(
                 isValidation: true,
+                obscureT: false,
                 controlerText: user,
                 texthint: 'Username',
              ), 
@@ -63,18 +77,16 @@ class _LoginPageState extends State<LoginPage> {
                 child: TextFieldV(
                 isValidation: true,
                 controlerText: pass,
+                obscureT: true,
                 texthint: 'Password',
              ), 
             ),
             SizedBox(height: 50,),
-            GestureDetector(
-              onTap: () {
-                sumbitLogin();
-              },
-              child: Container(
-                padding: EdgeInsets.fromLTRB(145, 20, 145, 20),
-                decoration: decorenButton,
-                child: Text('Sign in',style: tButtonDuo,)),
+             RoundedLoadingButton(
+                child: Text('Sign In', style: tButtonDuo),
+                controller: _btnController,
+                onPressed: _loadButton,
+                color: kColorPink,
             ),
 
             SizedBox(height: 120,),
@@ -103,23 +115,47 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
   sumbitLogin() {
-    DataHapLogin db = DataHapLogin();
-    db.getUser(username: user.text, password: pass.text).then((value){
+    DataHapLogin dp = DataHapLogin();
+    dp.getUser(username: user.text, password: pass.text).then((value){
       if (value != null) {
         saveLogin(value);
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomeScreen()));
       } else {
-        print('Username dan password salah coba lagi');
+        _showToast();
       }
     });
   }
 
-  saveLogin(LoginUser loginData) async {
+  saveLogin(LoginUser data) async {
     SharedPreferences saved = await SharedPreferences.getInstance();
     saved.setString('userData', jsonEncode({
-      "id" : loginData.id,
-      "email" : loginData.email,
-      "username" : loginData.username,
+      "id" : data.id,
+      "email" : data.email,
+      "username" : data.username,
     }));
   }
+
+  _showToast() {
+    Widget toast = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0 , vertical: 12.0),
+      decoration: BoxDecoration(
+       borderRadius: BorderRadius.circular(25.0),
+       color: Colors.red, 
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+       children: [
+         Icon(Icons.clear,color: Colors.white,),
+          SizedBox(width: 12.0,),
+          Text("Username dan password salah",style: tButtonColor,),
+       ], 
+      ),
+    );
+    fToast.showToast(
+      child: toast,
+      gravity: ToastGravity.TOP,
+      toastDuration: Duration(seconds: 3),
+    );
+  }
+
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:karyawan_app/constant/cons.dart';
+import 'package:mahasiswa_app/constant/cons.dart';
 
 
 

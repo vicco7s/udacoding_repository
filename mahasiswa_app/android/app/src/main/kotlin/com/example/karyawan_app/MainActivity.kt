@@ -1,4 +1,4 @@
-package com.udacoding.karyawan_app
+package com.udacoding.mahasiswa_app
 
 import io.flutter.embedding.android.FlutterActivity
 

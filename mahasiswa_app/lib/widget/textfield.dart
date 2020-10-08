@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:karyawan_app/constant/cons.dart';
+import 'package:mahasiswa_app/constant/cons.dart';
 
 
 
@@ -11,7 +11,7 @@ class TextFieldV extends StatelessWidget {
   final Function validator;
   final Widget icons;
   // final Function onPress;
-  // final bool obscureT;
+  final bool obscureT;
 
   TextFieldV({
     this.controlerText,
@@ -20,7 +20,7 @@ class TextFieldV extends StatelessWidget {
     this.validator,
     // this.onPress,
     this.icons,
-    // this.obscureT,
+    this.obscureT,
   });
 
   @override
@@ -28,7 +28,7 @@ class TextFieldV extends StatelessWidget {
     return TextFormField(
         validator: validator != null ? validator : isValidation ? (String value) => value.isEmpty ? '$texthint tidak boleh kosong' : null : null,
         controller: controlerText,
-        // obscureText: obscureT,
+        obscureText: obscureT,
         decoration: InputDecoration(
         // suffixIcon: IconButton(
         //                onPressed: onPress,

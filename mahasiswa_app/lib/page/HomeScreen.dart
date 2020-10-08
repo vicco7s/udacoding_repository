@@ -8,8 +8,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child:Text('this page home'),
-    );
+    return Scaffold(
+      
+    );    
   }
 }
