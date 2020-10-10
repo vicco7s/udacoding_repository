@@ -37,7 +37,7 @@ final decorenButton = BoxDecoration(
 );
 
 final buttonGesture = BoxDecoration(
-  color: kColorPink,
+  color: kColorBlue,
   borderRadius: BorderRadius.circular(50), 
   boxShadow: [
    BoxShadow(
