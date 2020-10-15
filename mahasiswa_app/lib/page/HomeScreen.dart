@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text('Mahasiswa',style: alerTextT,),
         actions: [
           IconButton(
-            icon: Icon(Icons.exit_to_app_sharp,color:kColorBlue), 
+            icon: Icon(Icons.exit_to_app,color:kColorBlue),
             onPressed: () => logout(),
           )
         ],

@@ -152,9 +152,9 @@ class _FormMahasiswaState extends State<FormMahasiswa> {
                     }
                   },
                 child: Container(
-                  padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                  padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
                   decoration: buttonGesture,
-                  child:  Text(data==null ? 'Input Data' : 'Update Data', style: TextStyle(color: Colors.white, fontSize: 17),),
+                  child:  Text(data==null ? 'Masukan Data' : 'Perbarui data', style: TextStyle(color: Colors.white, fontSize: 17),),
                     ),
                   ),
                 ],
