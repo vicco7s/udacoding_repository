@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "337302293033",
+    "firebase_url": "https://profil-sekolah-c3fe5.firebaseio.com",
+    "project_id": "profil-sekolah-c3fe5",
+    "storage_bucket": "profil-sekolah-c3fe5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:337302293033:android:1d36b6d1b2404b9f26aa38",
+        "android_client_info": {
+          "package_name": "com.udacoding.profil_sekolah"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "337302293033-da7r7u4pc7k5pvi7m3vnhpt7djj9pid6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.udacoding.profil_sekolah",
+            "certificate_hash": "e87b9e72221e441a379705bd0edd859f20b97d65"
+          }
+        },
+        {
+          "client_id": "337302293033-nfn8v3l3a53r19bb4i747ts14prf9vcr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTdxbBNLQKmCm2OJSx-jo3U8EbvvCqijw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "337302293033-nfn8v3l3a53r19bb4i747ts14prf9vcr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

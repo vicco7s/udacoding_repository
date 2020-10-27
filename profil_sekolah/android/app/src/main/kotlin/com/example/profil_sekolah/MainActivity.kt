@@ -1,4 +1,4 @@
-package com.example.profil_sekolah
+package com.udacoding.profil_sekolah
 
 import io.flutter.embedding.android.FlutterActivity
 
