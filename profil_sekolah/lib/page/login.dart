@@ -3,6 +3,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:profil_sekolah/components/ButtonLogin.dart';
 import 'package:profil_sekolah/models/firebaselogin.dart';
 import 'package:profil_sekolah/page/homepage.dart';
+import 'package:profil_sekolah/splashLogin.dart';
 import 'package:profil_sekolah/util/const.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -12,12 +13,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  GoogleSignIn _googleSignIn =
-      GoogleSignIn(scopes: <String>['email', 'profil']);
-  String photoUrl = "please link here";
-
-  String name = "", email = "", profilePic = "", gender = "";
-
   FToast ftoast;
 
   @override
@@ -70,17 +65,12 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       ButtonLogin(
                         onPress: () {
-                          _googleSignIn.signIn().then((response) {
-                            setState(() {
-                              name = response.displayName;
-                              email = response.email;
-                              photoUrl = response.photoUrl;
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => HomePage()));
-                            });
-                          }).catchError((onError) => print(onError));
+                          signInWithGoogle().then((result) {
+                            if (result != null) {
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(builder: (context) => SplashLogin()));
+                            }
+                          });
                         },
                         paddings: const EdgeInsets.fromLTRB(14, 10, 14, 10),
                         texts: Text(

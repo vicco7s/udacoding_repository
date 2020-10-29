@@ -12,16 +12,17 @@ const kStyleText = TextStyle(
   fontWeight: FontWeight.bold,
 );
 
+const kAppBarText = TextStyle(
+  color: cColorsBlue,
+);
+
 const kStyleText2 = TextStyle(
   fontSize: 20,
   color: cColorsBlue,
 );
 
-const kStyleText3 = TextStyle(
-  fontSize: 15, 
-  color: cColorsBlue, 
-  fontWeight: FontWeight.bold
-);
+const kStyleText3 =
+    TextStyle(fontSize: 15, color: cColorsBlue, fontWeight: FontWeight.bold);
 
 //Toast
 const kStyleToast = TextStyle(
