@@ -36,32 +36,17 @@ class ProfilPage extends StatelessWidget {
               SizedBox(height: 40),
               Text(
                 'NAME',
-                style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black54),
+                style: kStyleTextprof,
               ),
               Text(
                 name,
-                style: TextStyle(
-                    fontSize: 25,
-                    color: Colors.deepPurple,
-                    fontWeight: FontWeight.bold),
+                style: kTextProf,
               ),
               SizedBox(height: 20),
-              Text(
-                'EMAIL',
-                style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black54),
-              ),
+              Text('EMAIL', style: kStyleTextprof),
               Text(
                 email,
-                style: TextStyle(
-                    fontSize: 25,
-                    color: Colors.deepPurple,
-                    fontWeight: FontWeight.bold),
+                style: kTextProf,
               ),
               SizedBox(height: 40),
               RaisedButton(
@@ -72,7 +57,7 @@ class ProfilPage extends StatelessWidget {
                     return LoginPage();
                   }), ModalRoute.withName('/'));
                 },
-                color: Colors.deepPurple,
+                color: cColorsBlue,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(

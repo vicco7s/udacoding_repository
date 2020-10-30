@@ -13,12 +13,13 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0.0,
         backgroundColor: Colors.white,
         centerTitle: true,
         title: Text("Profil School",style: kAppBarText,),
         actions: [
           IconButton(
-            icon: Icon(Icons.exit_to_app,color: cColorsBlue,),
+            icon: Icon(Icons.account_circle_outlined,color: cColorsBlue,),
             onPressed: (){
               Navigator.push(context, CupertinoPageRoute(builder: (context) => ProfilPage()));
             })

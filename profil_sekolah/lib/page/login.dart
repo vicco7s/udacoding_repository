@@ -68,8 +68,9 @@ class _LoginPageState extends State<LoginPage> {
                           signInWithGoogle().then((result) {
                             if (result != null) {
                               Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(builder: (context) => SplashLogin()));
-                            }
+                                  MaterialPageRoute(
+                                      builder: (context) => SplashLogin()));
+                            } 
                           });
                         },
                         paddings: const EdgeInsets.fromLTRB(14, 10, 14, 10),

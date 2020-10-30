@@ -10,12 +10,18 @@ String name;
 String email;
 String imageUrl;
 
+// ignore: deprecated_member_use
 Future<String> signInWithGoogle() async {
   //inisiasi login
   await Firebase.initializeApp();
 
   //use google sign in
-  final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
+  final GoogleSignInAccount googleSignInAccount = await googleSignIn
+      .signIn()
+      .catchError((onError) => print('Error $onError'));
+
+  if (googleSignInAccount == null) return null;
+
   final GoogleSignInAuthentication googleSignInAuthentication =
       await googleSignInAccount.authentication;
 
@@ -43,7 +49,7 @@ Future<String> signInWithGoogle() async {
     assert(user.displayName != null);
     assert(user.photoURL != null);
 
-     // Store the retrieved data
+    // Store the retrieved data
     name = user.displayName;
     email = user.email;
     imageUrl = user.photoURL;
