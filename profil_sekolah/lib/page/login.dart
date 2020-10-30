@@ -50,9 +50,7 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(
                 height: 100,
               ),
-              Card(
-                elevation: 20,
-                child: Container(
+              Container(
                   padding: EdgeInsets.all(20),
                   child: Column(
                     children: [
@@ -111,7 +109,6 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ),
-              )
             ],
           ),
         ),
