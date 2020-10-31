@@ -12,7 +12,6 @@ class SplashLogin extends StatefulWidget {
 class _SplashLoginState extends State<SplashLogin> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     startTimer();
   }
@@ -37,7 +36,7 @@ class _SplashLoginState extends State<SplashLogin> {
   );
 
   Future<Timer> startTimer() async {
-    return Timer(Duration(seconds: 10), onDone);
+    return Timer(Duration(seconds: 5), onDone);
   }
 
   void onDone() {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:profil_sekolah/models/firebaselogin.dart';
-import 'package:profil_sekolah/page/login.dart';
+import 'package:profil_sekolah/screen/splashlogout.dart';
 import 'package:profil_sekolah/util/const.dart';
 
 class ProfilPage extends StatelessWidget {
@@ -54,7 +54,7 @@ class ProfilPage extends StatelessWidget {
                   signOutGoogle(); //import firebasilogin
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(builder: (context) {
-                    return LoginPage();
+                    return SplashOut();
                   }), ModalRoute.withName('/'));
                 },
                 color: cColorsBlue,

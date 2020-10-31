@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:profil_sekolah/splash.dart';
-import 'package:profil_sekolah/splashLogin.dart';
+import 'package:profil_sekolah/screen/splash.dart';
 
 void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {

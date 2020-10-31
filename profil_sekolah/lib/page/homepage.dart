@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:profil_sekolah/page/profilpage.dart';
@@ -9,6 +11,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final items = List<String>.generate(20, (i) => "Item ${i + 1}");
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,16 +19,63 @@ class _HomePageState extends State<HomePage> {
         elevation: 0.0,
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: Text("Profil School",style: kAppBarText,),
+        title: Text(
+          "Profil School",
+          style: kAppBarText,
+        ),
         actions: [
           IconButton(
-            icon: Icon(Icons.account_circle_outlined,color: cColorsBlue,),
-            onPressed: (){
-              Navigator.push(context, CupertinoPageRoute(builder: (context) => ProfilPage()));
-            })
+              icon: Icon(
+                Icons.account_circle_outlined,
+                color: cColorsBlue,
+              ),
+              onPressed: () {
+                Navigator.push(context,
+                    CupertinoPageRoute(builder: (context) => ProfilPage()));
+              })
         ],
       ),
-      body: Container(),
+      body: Container(
+        color: cColorsWhite,
+        child: ListView.builder(
+            itemCount: items.length,
+            itemBuilder: (context, i) {
+              final item = items[i];
+              return Dismissible(
+                key: Key(item),
+                onDismissed: (direction) {
+                  setState(() {
+                    items.removeAt(i);
+                  });
+                  Scaffold.of(context)
+                    .showSnackBar(SnackBar(content: Text("Di hapus")));
+                },
+                background: Container(color: Colors.red,),
+                child: Container(
+                  padding: EdgeInsets.fromLTRB(10, 5, 10, 0),
+                  child: Card(
+                    elevation: 10.0,
+                    child: ListTile(
+                      onTap: () => print('detail'),
+                      leading: IconButton(
+                        icon: Icon(Icons.update,color: cColorsBlue,),
+                        onPressed: () {
+                          print('update');
+                        },
+                      ),
+                      title: Text('SMAN 1 SALAM BABARIS',),
+                      subtitle: Text('jl,transmigrasi Utara Kel.Salam Babaris Kab.Tapin'),
+                    ),
+                  ),
+                ),
+              );
+            }),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => print('create'),
+        child: Icon(Icons.add),
+        backgroundColor: cColorsBlue,
+      ),
     );
   }
 }

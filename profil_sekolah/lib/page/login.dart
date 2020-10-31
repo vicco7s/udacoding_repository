@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:profil_sekolah/components/ButtonLogin.dart';
 import 'package:profil_sekolah/models/firebaselogin.dart';
-import 'package:profil_sekolah/page/homepage.dart';
-import 'package:profil_sekolah/splashLogin.dart';
+import 'package:profil_sekolah/screen/splashLogin.dart';
 import 'package:profil_sekolah/util/const.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -17,7 +15,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     ftoast = FToast();
     ftoast.init(context);
