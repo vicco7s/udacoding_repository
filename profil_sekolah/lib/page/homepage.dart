@@ -9,7 +9,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final items = List<String>.generate(20, (i) => "Item ${i + 1}");
+  // final items = List<String>.generate(20, (i) => "Item ${i + 1}");
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,20 +36,9 @@ class _HomePageState extends State<HomePage> {
       body: Container(
         color: cColorsWhite,
         child: ListView.builder(
-            itemCount: items.length,
+            itemCount: 2,
             itemBuilder: (context, i) {
-              final item = items[i];
-              return Dismissible(
-                key: Key(item),
-                onDismissed: (direction) {
-                  setState(() {
-                    items.removeAt(i);
-                  });
-                  Scaffold.of(context)
-                    .showSnackBar(SnackBar(content: Text("Di hapus")));
-                },
-                background: Container(color: Colors.red,),
-                child: Container(
+              return Container(
                   padding: EdgeInsets.fromLTRB(10, 5, 10, 0),
                   child: Card(
                     elevation: 10.0,
@@ -65,8 +54,7 @@ class _HomePageState extends State<HomePage> {
                       subtitle: Text('jl,transmigrasi Utara Kel.Salam Babaris Kab.Tapin'),
                     ),
                   ),
-                ),
-              );
+                );
             }),
       ),
       floatingActionButton: FloatingActionButton(
