@@ -9,6 +9,8 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="profil_sekolah"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyAAP4AIpYPBpQIxA8jGKa9ug18wzdIvRTA"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
