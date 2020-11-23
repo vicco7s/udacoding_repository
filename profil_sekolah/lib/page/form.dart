@@ -52,6 +52,7 @@ class _FormPageState extends State<FormPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0.0,
         centerTitle: true,
         backgroundColor: cColorsWhite,
         title: Text(
@@ -69,7 +70,37 @@ class _FormPageState extends State<FormPage> {
         ),
       ),
 
-      body: ,
+      body: Container(
+        color: cColorsWhite,
+        child: ListView(
+          children: [
+            TextFormField(
+              controller: _schoolName,
+              decoration: InputDecoration(
+                labelText: 'School'
+              ),
+            ),
+            TextFormField(
+              controller: _schoolName,
+              decoration: InputDecoration(
+                labelText: 'School'
+              ),
+            ),
+            TextFormField(
+              controller: _schoolName,
+              decoration: InputDecoration(
+                labelText: 'School'
+              ),
+            ),
+            TextFormField(
+              controller: _schoolName,
+              decoration: InputDecoration(
+                labelText: 'School'
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
