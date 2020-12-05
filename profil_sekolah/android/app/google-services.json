@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "337302293033-da7r7u4pc7k5pvi7m3vnhpt7djj9pid6.apps.googleusercontent.com",
+          "client_id": "337302293033-qll659rcsu4vt5v5hntinba7mfs3o8b7.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.udacoding.profil_sekolah",
-            "certificate_hash": "e87b9e72221e441a379705bd0edd859f20b97d65"
+            "certificate_hash": "b110f14fd7a55616681094cd0aae1fe4c64a66f7"
           }
         },
         {
