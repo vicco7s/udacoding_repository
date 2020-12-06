@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
       color: Colors.white,
       child: Center(
         child: Container(
-          padding: EdgeInsets.all(100),
+          padding: EdgeInsets.all(150),
           child: Image.asset("images/logo.png",fit: BoxFit.fill,)), 
       ),
     );

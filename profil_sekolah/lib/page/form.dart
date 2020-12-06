@@ -1,4 +1,7 @@
+import 'dart:ffi';
+
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:profil_sekolah/models/modelFirebase.dart';
 import 'package:profil_sekolah/util/const.dart';
@@ -19,7 +22,6 @@ class _FormPageState extends State<FormPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     if (widget.school != null) {
       _schoolName = TextEditingController(text: widget.school.nameSchool);
@@ -70,51 +72,95 @@ class _FormPageState extends State<FormPage> {
 
       body: Container(
         color: cColorsWhite,
-        child: ListView(
-          children: [
-            Container(
-              padding: EdgeInsets.all(10),
-              child: TextFormField(
-                controller: _schoolName,
-                decoration: InputDecoration(
-                  labelText: 'Nama Sekolah'
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                padding: EdgeInsets.all(10),
+                child: TextFormField(
+                  controller: _schoolName,
+                  decoration: InputDecoration(
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: cColorsBlue,
+                        style: BorderStyle.solid
+                      ),
+                    ),
+                    labelText: 'Nama Sekolah',
+                    labelStyle: TextStyle(
+                      color:cColorsBlue
+                    ),
+                  ),
                 ),
               ),
-            ),
-            Container(
-              padding: EdgeInsets.all(10),
-              child: TextFormField(
-                controller: _description,
-                decoration: InputDecoration(
-                  labelText: 'Deskripsi'
+              Container(
+                padding: EdgeInsets.all(10),
+                child: TextFormField(
+                  controller: _description,
+                  keyboardType: TextInputType.multiline,
+                  minLines: 1,
+                  maxLines: 6,
+                  decoration: InputDecoration(
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: cColorsBlue,
+                        style: BorderStyle.solid
+                      ),
+                    ),
+                    labelText: 'Deskripsi',
+                    labelStyle: TextStyle(
+                      color:cColorsBlue
+                    ),
+                  ),
                 ),
               ),
-            ),
-            Container(
-              padding: EdgeInsets.all(10),
-              child: TextFormField(
-                keyboardType: TextInputType.number,
-                controller: _lat,
-                decoration: InputDecoration(
-                  labelText: 'lat'
+              Container(
+                padding: EdgeInsets.all(10),
+                child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  controller: _lat,
+                  decoration: InputDecoration(
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: cColorsBlue,
+                        style: BorderStyle.solid
+                      ),
+                    ),
+                    labelText: 'lat',
+                    labelStyle: TextStyle(
+                      color:cColorsBlue
+                    ),
+                  ),
                 ),
               ),
-            ),
-            Container(
-              padding: EdgeInsets.all(10),
-              child: TextFormField(
-                keyboardType: TextInputType.number,
-                controller: _long,
-                decoration: InputDecoration(
-                  labelText: 'long'
+              Container(
+                padding: EdgeInsets.all(10),
+                child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  controller: _long,
+                  decoration: InputDecoration(
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: cColorsBlue,
+                        style: BorderStyle.solid
+                      ),
+                    ),
+                    labelText: 'long',
+                    labelStyle: TextStyle(
+                      color:cColorsBlue
+                    ),
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 20.0,),
-            Container(
-              , 
-            )
-          ],
+              SizedBox(height: 20.0,),
+              CupertinoButton(
+                color: cColorsBlue,
+                child: widget.school == null ? Text('Create') : Text('Update'), 
+                onPressed: (){
+                  print('creat');
+                }),
+            ],
+          ),
         ),
       ),
     );
