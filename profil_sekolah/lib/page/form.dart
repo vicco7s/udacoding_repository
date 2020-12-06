@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:profil_sekolah/models/modelFirebase.dart';
@@ -74,29 +72,47 @@ class _FormPageState extends State<FormPage> {
         color: cColorsWhite,
         child: ListView(
           children: [
-            TextFormField(
-              controller: _schoolName,
-              decoration: InputDecoration(
-                labelText: 'School'
+            Container(
+              padding: EdgeInsets.all(10),
+              child: TextFormField(
+                controller: _schoolName,
+                decoration: InputDecoration(
+                  labelText: 'Nama Sekolah'
+                ),
               ),
             ),
-            TextFormField(
-              controller: _schoolName,
-              decoration: InputDecoration(
-                labelText: 'School'
+            Container(
+              padding: EdgeInsets.all(10),
+              child: TextFormField(
+                controller: _description,
+                decoration: InputDecoration(
+                  labelText: 'Deskripsi'
+                ),
               ),
             ),
-            TextFormField(
-              controller: _schoolName,
-              decoration: InputDecoration(
-                labelText: 'School'
+            Container(
+              padding: EdgeInsets.all(10),
+              child: TextFormField(
+                keyboardType: TextInputType.number,
+                controller: _lat,
+                decoration: InputDecoration(
+                  labelText: 'lat'
+                ),
               ),
             ),
-            TextFormField(
-              controller: _schoolName,
-              decoration: InputDecoration(
-                labelText: 'School'
+            Container(
+              padding: EdgeInsets.all(10),
+              child: TextFormField(
+                keyboardType: TextInputType.number,
+                controller: _long,
+                decoration: InputDecoration(
+                  labelText: 'long'
+                ),
               ),
+            ),
+            SizedBox(height: 20.0,),
+            Container(
+              , 
             )
           ],
         ),
