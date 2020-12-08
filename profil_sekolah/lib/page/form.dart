@@ -1,8 +1,7 @@
-import 'dart:ffi';
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:profil_sekolah/components/textform.dart';
 import 'package:profil_sekolah/models/modelFirebase.dart';
 import 'package:profil_sekolah/util/const.dart';
 
@@ -77,79 +76,51 @@ class _FormPageState extends State<FormPage> {
             children: [
               Container(
                 padding: EdgeInsets.all(10),
-                child: TextFormField(
-                  controller: _schoolName,
-                  decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: cColorsBlue,
-                        style: BorderStyle.solid
-                      ),
-                    ),
-                    labelText: 'Nama Sekolah',
-                    labelStyle: TextStyle(
-                      color:cColorsBlue
-                    ),
+                child: TextForms(
+                  inputController: _schoolName,
+                  bordersd: BorderSide(
+                    color: cColorsBlue,
+                    style: BorderStyle.solid
                   ),
+                  lText: 'Nama Sekolah',
                 ),
               ),
               Container(
                 padding: EdgeInsets.all(10),
-                child: TextFormField(
-                  controller: _description,
-                  keyboardType: TextInputType.multiline,
-                  minLines: 1,
-                  maxLines: 6,
-                  decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
+                child: TextForms(
+                  inputController: _description,
+                  typeinput: TextInputType.multiline,
+                  miLine: 1,
+                  mxLine: 6,
+                  lText: 'Description',
+                  bordersd: BorderSide(
                         color: cColorsBlue,
                         style: BorderStyle.solid
                       ),
-                    ),
-                    labelText: 'Deskripsi',
-                    labelStyle: TextStyle(
-                      color:cColorsBlue
-                    ),
-                  ),
                 ),
               ),
               Container(
                 padding: EdgeInsets.all(10),
-                child: TextFormField(
-                  keyboardType: TextInputType.number,
-                  controller: _lat,
-                  decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: cColorsBlue,
-                        style: BorderStyle.solid
-                      ),
+                child: TextForms(
+                  typeinput: TextInputType.number,
+                  inputController: _lat,
+                  lText: 'lat',
+                    bordersd: BorderSide(
+                      color: cColorsBlue,
+                      style: BorderStyle.solid
                     ),
-                    labelText: 'lat',
-                    labelStyle: TextStyle(
-                      color:cColorsBlue
-                    ),
-                  ),
                 ),
               ),
               Container(
                 padding: EdgeInsets.all(10),
-                child: TextFormField(
-                  keyboardType: TextInputType.number,
-                  controller: _long,
-                  decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: cColorsBlue,
-                        style: BorderStyle.solid
-                      ),
+                child: TextForms(
+                  typeinput: TextInputType.number,
+                  inputController: _long,
+                  lText: 'long',
+                    bordersd: BorderSide(
+                      color: cColorsBlue,
+                      style: BorderStyle.solid
                     ),
-                    labelText: 'long',
-                    labelStyle: TextStyle(
-                      color:cColorsBlue
-                    ),
-                  ),
                 ),
               ),
               SizedBox(height: 20.0,),
@@ -166,3 +137,5 @@ class _FormPageState extends State<FormPage> {
     );
   }
 }
+
+
