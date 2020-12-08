@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -33,17 +35,15 @@ class _FormPageState extends State<FormPage> {
   Future<void> createorupdate() async {
     if (widget.school == null) {
       //make
-      // await addSchool(
-      //   nameSchool: _schoolName.text,
-      //   description: _description.text,
-      //   lat: _lat.text,
-      //   long: _long.text,
-      // );
+      await addSchool(
+        nameSchool: _schoolName.text,
+        description: _description.text,
+        lat: _lat.text,
+        long: _long.text,
+      );
     } else {
       //update
-      // await updateSchool(
-      //   school: widget.school
-      // );
+      await updateSchool(school: widget.school);
     }
   }
 
@@ -68,7 +68,6 @@ class _FormPageState extends State<FormPage> {
           },
         ),
       ),
-
       body: Container(
         color: cColorsWhite,
         child: SingleChildScrollView(
@@ -78,10 +77,8 @@ class _FormPageState extends State<FormPage> {
                 padding: EdgeInsets.all(10),
                 child: TextForms(
                   inputController: _schoolName,
-                  bordersd: BorderSide(
-                    color: cColorsBlue,
-                    style: BorderStyle.solid
-                  ),
+                  bordersd:
+                      BorderSide(color: cColorsBlue, style: BorderStyle.solid),
                   lText: 'Nama Sekolah',
                 ),
               ),
@@ -93,10 +90,8 @@ class _FormPageState extends State<FormPage> {
                   miLine: 1,
                   mxLine: 6,
                   lText: 'Description',
-                  bordersd: BorderSide(
-                        color: cColorsBlue,
-                        style: BorderStyle.solid
-                      ),
+                  bordersd:
+                      BorderSide(color: cColorsBlue, style: BorderStyle.solid),
                 ),
               ),
               Container(
@@ -105,10 +100,8 @@ class _FormPageState extends State<FormPage> {
                   typeinput: TextInputType.number,
                   inputController: _lat,
                   lText: 'lat',
-                    bordersd: BorderSide(
-                      color: cColorsBlue,
-                      style: BorderStyle.solid
-                    ),
+                  bordersd:
+                      BorderSide(color: cColorsBlue, style: BorderStyle.solid),
                 ),
               ),
               Container(
@@ -117,25 +110,51 @@ class _FormPageState extends State<FormPage> {
                   typeinput: TextInputType.number,
                   inputController: _long,
                   lText: 'long',
-                    bordersd: BorderSide(
-                      color: cColorsBlue,
-                      style: BorderStyle.solid
-                    ),
+                  bordersd:
+                      BorderSide(color: cColorsBlue, style: BorderStyle.solid),
                 ),
               ),
-              SizedBox(height: 20.0,),
+              SizedBox(
+                height: 20.0,
+              ),
               CupertinoButton(
-                color: cColorsBlue,
-                child: widget.school == null ? Text('Create') : Text('Update'), 
-                onPressed: (){
-                  print('creat');
-                }),
+                  color: cColorsBlue,
+                  child:
+                      widget.school == null ? Text('Create') : Text('Update'),
+                  onPressed: () {
+                    print('test');
+                    createorupdate();
+                  }),
             ],
           ),
         ),
       ),
     );
   }
+
+  Future<void> addSchool({
+    String nameSchool,
+    String description,
+    String lat,
+    String long,
+  }) async {
+    SchoolModel school = SchoolModel(
+      nameSchool: nameSchool,
+      description: description,
+      lat: lat,
+      long: long,
+    );
+    await widget.ref.push().set(school.toJson());
+    Navigator.pop(context, 'create');
+  }
+
+  Future<void> updateSchool({SchoolModel school}) async {
+    school.nameSchool = _schoolName.text;
+    school.description = _description.text;
+    school.lat = _lat.text;
+    school.long = _long.text;
+
+    await widget.ref.child(school.key).set(school.toJson());
+    Navigator.pop(context,'update');
+  }
 }
-
-
