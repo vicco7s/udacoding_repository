@@ -21,31 +21,43 @@ class PageDetail extends StatelessWidget {
         centerTitle: true,  
       ),
       body: Center(
-        child: Card(
-          elevation: 20.0,
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ListTile(
-                title: Text('Nama : '+ mahasiswa.nim),
+              Card(
+                elevation: 10,
+                child: ListTile(
+                  title: Text(mahasiswa.nim),
+                ),
               ),
-              ListTile(
-                title: Text('Nim  : '+ mahasiswa.nama),
+              Card(
+                elevation: 10,
+                child: ListTile(
+                  title: Text(mahasiswa.nama),
+                ),
               ),
-              ListTile(
-                title: Text('alamat : '+ mahasiswa.gender),
+              Card(
+                elevation: 10,
+                child: ListTile(
+                  title: Text(mahasiswa.gender),
+                ),
               ),
-              ListTile(
-                title: Text('gender : '+ mahasiswa.alamat),
+              Card(
+                elevation: 10,
+                child: ListTile(
+                  title: Text(mahasiswa.alamat),
+                ),
               ),
-              ListTile(
-                title: Text('angkatan : '+ mahasiswa.tahun.toString()),
+              Card(
+                elevation: 10,
+                child: ListTile(
+                  title: Text(mahasiswa.tahun.toString()),
+                ),
               ),
               
             ],
           ),
         ),
-      ),
     );
   }
 }
