@@ -26,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
   Future<Timer> startTimer() async {
-    return Timer(Duration(seconds: 10), onDone);
+    return Timer(Duration(seconds: 2), onDone);
   }
   void onDone() {
     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));

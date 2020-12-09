@@ -29,18 +29,17 @@ class _LoginPageState extends State<LoginPage> {
   //melihat password atau menutup password
   final RoundedLoadingButtonController _btnController = RoundedLoadingButtonController();
 
-  void _loadButton() async {
+  void _loadButton() async{
     Timer(Duration(seconds: 3), () {
       _btnController.reset();
       if(_keyForm.currentState.validate()){
-          sumbitLogin();
+           sumbitLogin();
         }
     });
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     fToast = FToast();
     fToast.init(context); 
@@ -114,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
       )
     );
   }
-  sumbitLogin() {
+  sumbitLogin() async {
     DataHapLogin dp = DataHapLogin();
     dp.getUser(username: user.text, password: pass.text).then((value){
       if (value != null) {
