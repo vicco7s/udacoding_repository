@@ -1,21 +1,21 @@
-class LoginUser{
+class Admin{
 
   int _id;
   String _email;
   String _username;
   String _password;
 
-  LoginUser(this._email, this._username, this._password);
+  Admin(this._email, this._username, this._password);
 
-  //set
-  LoginUser.fromMap(Map<String, dynamic> map){
+  //SETTER
+  Admin.fromMap(Map<String, dynamic> map){
     this._id = map['id'];
-    this._username = map['username'];
     this._email = map['email'];
+    this._username = map['username'];
     this._password = map['password'];
   }
 
-  // get
+  //GETTER
   Map<String, dynamic> toMap(){
     var map = Map<String, dynamic>();
     if(_id != null){
@@ -27,7 +27,7 @@ class LoginUser{
     return map;
   }
 
-  // get
+  //GETTER
   String get password => _password;
   String get username => _username;
   String get email => _email;

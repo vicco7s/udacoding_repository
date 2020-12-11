@@ -20,14 +20,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
 
   SharedPreferences sp;
-  LoginUser userData;
+  Admin userData;
 
   List<ModelMahasiswa> items = List();
   DataMahasiswaHap db = DataMahasiswaHap();
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     db.getAllMahasiswa().then((value) {
       setState(() {
@@ -162,7 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   getUserData() async {
     sp = await SharedPreferences.getInstance();
-    userData = LoginUser.fromMap(jsonDecode(sp.getString('userData')));
+    userData = Admin.fromMap(jsonDecode(sp.getString('userData')));
   }
 
   logout() async{

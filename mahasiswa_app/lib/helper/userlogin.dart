@@ -4,13 +4,12 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 
+class DatabaseHelperLogin {
 
-class DataHapLogin {
+  static final DatabaseHelperLogin _instanse = new DatabaseHelperLogin.internal();
+  factory DatabaseHelperLogin() => _instanse;
 
-  static final DataHapLogin _instanse = DataHapLogin.internal();
-  factory DataHapLogin() => _instanse;
-
-  final String tableName = 'users';
+  final String tabelName = 'users';
   final String columnID = 'id';
   final String columnEmail = 'email';
   final String columnUsername = 'username';
@@ -18,7 +17,7 @@ class DataHapLogin {
 
   static Database _db;
 
-  DataHapLogin.internal();
+  DatabaseHelperLogin.internal();
 
   Future<Database> get db async {
     if (_db != null) {
@@ -36,43 +35,43 @@ class DataHapLogin {
   }
 
   void _onCreate(Database db, int newVersion) async {
-    db.execute('CREATE TABLE $tableName($columnID INTEGER PRIMARY KEY, $columnEmail TEXT, $columnUsername TEXT, $columnPassword TEXT)');
+    db.execute('CREATE TABLE $tabelName($columnID INTEGER PRIMARY KEY, $columnEmail TEXT, $columnUsername TEXT, $columnPassword TEXT)');
   }
 
   //Create data user
-  Future<int> createUser(LoginUser loginuser) async{
+  Future<int> createUser(Admin admin) async{
     var dbClient = await db;
-    var result = await dbClient.insert(tableName, loginuser.toMap());
+    var result = await dbClient.insert(tabelName, admin.toMap());
     return result;
   }
 
   //Get all data user
   Future<List> getAllUsers() async{
     var dbClient = await db;
-    var result = await dbClient.query(tableName, columns: [columnID, columnEmail, columnUsername, columnPassword]);
+    var result = await dbClient.query(tabelName, columns: [columnID, columnEmail, columnUsername, columnPassword]);
     return result;
   }
 
   //Get one data user
-  Future<LoginUser> getUser({@required String username, @required String password}) async{
+  Future<Admin> getUser({@required String username, @required String password}) async{
     var dbClient = await db;
-    var result = await dbClient.rawQuery("SELECT * FROM $tableName WHERE $columnUsername = ? AND $columnPassword = ?", [username, password]);
+    var result = await dbClient.rawQuery("SELECT * FROM $tabelName WHERE $columnUsername = ? AND $columnPassword = ?", [username, password]);
     if(result.length>0){
-      return LoginUser.fromMap(result.first);
+      return Admin.fromMap(result.first);
     }
     return null;
   }
 
   //Update data user
-  Future<int> updateUser(LoginUser loginuser) async{
+  Future<int> updateUser(Admin admin) async{
     var dbClient = await db;
-    return await dbClient.update(tableName, loginuser.toMap(), where: "$columnID=?", whereArgs: [loginuser.id]);
+    return await dbClient.update(tabelName, admin.toMap(), where: "$columnID=?", whereArgs: [admin.id]);
   }
 
   //Delete data user
   Future<int> deleteUser(int id) async{
     var dbClient = await db;
-    return await dbClient.delete(tableName, where: "$columnID=?", whereArgs: [id]);
+    return await dbClient.delete(tabelName, where: "$columnID=?", whereArgs: [id]);
   }
 
 }

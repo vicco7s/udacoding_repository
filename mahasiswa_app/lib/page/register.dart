@@ -126,8 +126,8 @@ class _SignUpPageState extends State<SignUpPage> {
   }
   // ignore: missing_return
    dataRegister() {
-    DataHapLogin db = DataHapLogin();
-    db.createUser(LoginUser(user.text,mail.text,pass.text)).then((value){
+    DatabaseHelperLogin db = DatabaseHelperLogin();
+    db.createUser(Admin(user.text,mail.text,pass.text)).then((value){
       _showToast();
       Navigator.pop(context);
     });
