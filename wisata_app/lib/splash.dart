@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'page/login.dart';
+import 'package:wisata_app/onboard/onBoardingscreen.dart';
+// import 'page/login.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -34,6 +35,6 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void onDone() {
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => OnboardingScreen()));
   }
 }
