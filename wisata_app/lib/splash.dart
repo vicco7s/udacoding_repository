@@ -1,7 +1,5 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-
 import 'page/login.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -30,6 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 
+  // ignore: non_constant_identifier_names
   Future<Timer> StartTimer() async {
     return Timer(Duration(seconds: 2), onDone);
   }

@@ -11,4 +11,7 @@ const lText = TextStyle(
   
 );
 
-const lTextduo = TextStyle();
+const lTextduo = TextStyle(
+  fontSize: 20,
+  color: bColorWhite,
+);
