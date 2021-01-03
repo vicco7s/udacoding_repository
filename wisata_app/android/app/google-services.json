@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "211396641264",
+    "project_id": "wisata-app-a756e",
+    "storage_bucket": "wisata-app-a756e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:211396641264:android:53417bd9dd8c9b15635d35",
+        "android_client_info": {
+          "package_name": "com.udacoding.wisata_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "211396641264-7s3hrv9iesj0fjgs59ciog2ilp4c8acc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.udacoding.wisata_app",
+            "certificate_hash": "37ee0cc50ebf426832005770667db96157f92553"
+          }
+        },
+        {
+          "client_id": "211396641264-lcbu1ju85ir5tre6q650sni92sh1dhgf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnAvAkY3uxwyePIO_Oguq_SHZREzAflEU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "211396641264-lcbu1ju85ir5tre6q650sni92sh1dhgf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
