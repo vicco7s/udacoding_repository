@@ -1,4 +1,4 @@
-package com.example.wisata_app
+package com.udacoding.wisata_app
 
 import io.flutter.embedding.android.FlutterActivity
 
