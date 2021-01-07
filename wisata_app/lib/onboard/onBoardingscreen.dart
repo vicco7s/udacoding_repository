@@ -30,7 +30,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       width: isActive ? 24.0 : 16.0,
       decoration: BoxDecoration(
         color: isActive ? Colors.black : Color(0xFF7B51D3),
-        borderRadius: BorderRadius.all(Radius.circular(12)),
+        borderRadius: BorderRadius.all(Radius.circular(50)),
       ),
     );
   }
