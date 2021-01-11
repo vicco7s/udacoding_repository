@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 const bColorWhite = Color(0xFFFAFAFA);
 const bColorBlue = Color(0xFF304FFE);
 const bColorBlack = Color(0xFF212121);
+const bColorgry = Color(0xFFBDBDBD);
 
 const lText = TextStyle(
   color: bColorBlack,
@@ -23,13 +24,19 @@ final kTitleStyle = TextStyle(
   height: 1.5,
 );
 
-final kSubtitleStyle = TextStyle(
+const kSubtitleStyle = TextStyle(
   color: bColorBlue,
   fontSize: 18.0,
   height: 1.2,
 );
 
-final kSkipText = TextStyle(
+const kSkipText = TextStyle(
   color: bColorBlue,
   fontSize: 20.0,
 );
+
+const kOnbordText = TextStyle(
+  color: bColorBlue,
+  fontSize: 22.0,
+);
+
