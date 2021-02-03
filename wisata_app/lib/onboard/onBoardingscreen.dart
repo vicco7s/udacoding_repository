@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:wisata_app/page/login.dart';
 import 'package:wisata_app/util/count.dart';
 import 'onBoardButton.dart';
 import 'onboardingbody.dart';
@@ -45,7 +46,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 Container(
                   alignment: Alignment.centerRight,
                   child: FlatButton(
-                    onPressed: () => print('Skip'),
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+                    },
                     child: Text('Skip',style: kSkipText),
                   ),
                 ),
@@ -84,7 +87,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               width: double.infinity,
               color: Colors.white,
               child: ButtonOnboard( //onBoardButton.dart buttonOnboard
-                onTap: () => print('Get Started'),
+                onTap: () {
+                  print('Get Started');
+                  Navigator.push(context,MaterialPageRoute(builder: (context) => LoginPage()));
+                },
               ),
             )
           : Text(''),

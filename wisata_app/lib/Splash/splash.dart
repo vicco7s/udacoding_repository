@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:wisata_app/onboard/onBoardingscreen.dart';
-// import 'page/login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wisata_app/page/login.dart';
+
+int initScreen;
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -31,10 +33,21 @@ class _SplashScreenState extends State<SplashScreen> {
 
   // ignore: non_constant_identifier_names
   Future<Timer> StartTimer() async {
-    return Timer(Duration(seconds: 2), onDone);
+    return Timer(Duration(seconds: 3), onDone);
   }
 
-  void onDone() {
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => OnboardingScreen()));
+  Future<void> onDone() async{
+    WidgetsFlutterBinding.ensureInitialized();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    initScreen = prefs.getInt("initScreen");
+    await prefs.setInt("initScreen", 1);
+    print("initScreen $initScreen");
+    
+    if(initScreen == 1){
+      Navigator.of(context).pushReplacementNamed("first");
+    }else if(initScreen == null){
+      Navigator.of(context).pushReplacementNamed("second");
+    }
+
   }
 }

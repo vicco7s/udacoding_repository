@@ -28,12 +28,14 @@ class BodyWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Center(
-                  child:SvgPicture.asset(
-                    'images/one.svg',
-                    height: 300.0,
-                    width: 300.0,
-                  )
+                Expanded(
+                  child: Center(
+                    child:SvgPicture.asset(
+                      'images/one.svg',
+                      height: 300.0,
+                      width: 300.0,
+                    )
+                  ),
                 ),
                 SizedBox(height: 30.0),
                 Text(
@@ -53,16 +55,18 @@ class BodyWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Center(
-                  child: SvgPicture.asset(
-                    'images/two.svg',
-                    height: 300.0,
-                    width: 300.0,
-                  )
+                Expanded(
+                  child: Center(
+                    child: SvgPicture.asset(
+                      'images/two.svg',
+                      height: 300.0,
+                      width: 300.0,
+                    )
+                  ),
                 ),
                 SizedBox(height: 30.0),
                 Text(
-                  'Esse aliquip enim adipisicing\nlabore et.',
+                  'Esse aliquip enim adipisicing',
                   style: kTitleStyle,
                 ),
                 SizedBox(height: 15.0),
@@ -78,12 +82,14 @@ class BodyWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Center(
-                  child:SvgPicture.asset(
-                    'images/tri.svg',
-                    height: 300.0,
-                    width: 300.0,
-                  )
+                Expanded(
+                  child: Center(
+                    child:SvgPicture.asset(
+                      'images/tri.svg',
+                      height: 300.0,
+                      width: 300.0,
+                    )
+                  ),
                 ),
                 SizedBox(height: 30.0),
                 Text(
