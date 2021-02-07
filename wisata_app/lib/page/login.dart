@@ -22,12 +22,12 @@ class _LoginPageState extends State<LoginPage> {
             ),
 
             ButtonLogin(
-              onTap: (){},
+              onTap: (){
+                print("button click");
+              },
               img: Image.asset("images/google.png",width: 70,height: 70),
               tButton: Text("Login With Google \r",style: lTextduo,),
             ),
-
-
           ],
         ),
       ),
