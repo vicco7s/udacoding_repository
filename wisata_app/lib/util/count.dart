@@ -8,8 +8,7 @@ const bColorgry = Color(0xFFBDBDBD);
 const lText = TextStyle(
   color: bColorBlack,
   fontSize: 25,
-  fontWeight: FontWeight.bold,
-  
+  fontWeight: FontWeight.bold
 );
 
 const lTextduo = TextStyle(
