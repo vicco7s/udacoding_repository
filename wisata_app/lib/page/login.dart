@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:wisata_app/components/buttonLogin.dart';
+import 'package:wisata_app/page/homepage.dart';
+import 'package:wisata_app/services/firebaselogin.dart';
+import 'package:wisata_app/services/sharedlogin.dart';
 import 'package:wisata_app/util/count.dart';
 
 class LoginPage extends StatefulWidget {
@@ -8,9 +11,27 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool isLogin = false;
+  FirebaseLoginService _firebaseLoginService = FirebaseLoginService();
+  SharedPrefService _sharedPrefService = SharedPrefService();
+
+  Future checkLogin() async{
+    var result = await _sharedPrefService.isLogin();
+    setState(() {
+      isLogin = result;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    checkLogin();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return isLogin ? HomePage() :
+    Scaffold(
       backgroundColor: Colors.white,
       body:Center(
         child: Column(
@@ -23,7 +44,13 @@ class _LoginPageState extends State<LoginPage> {
 
             ButtonLogin(
               onTap: (){
-                print("button click");
+                _firebaseLoginService.handleSignIn().then((result) {
+                    if(result != null) {
+                      Navigator.pushReplacement(context, MaterialPageRoute(
+                          builder: (context) => HomePage()
+                      ));
+                    }
+                });
               },
               img: Image.asset("images/google.png",width: 70,height: 70),
               tButton: Text("Login With Google \r",style: lTextduo,),

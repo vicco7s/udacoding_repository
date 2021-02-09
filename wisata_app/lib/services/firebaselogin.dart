@@ -12,7 +12,7 @@ class FirebaseLoginService{
     return users;
   }
 
-  Future<User> _handleSignIn() async {
+  Future<User> handleSignIn() async {
     try{
       final GoogleSignInAccount googleSignInAccount = await _googleSignIn.signIn().catchError((onError) => print('onError'));
       final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
