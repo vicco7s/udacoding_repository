@@ -14,7 +14,7 @@ class SharedPrefService{
     await pref.remove('isLogin');
   }
 
-  Future<String> savedDataPref(datetype, key, value) async {
+  Future<String> savedDataPref({datetype, key, value}) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
 
     switch(datetype){

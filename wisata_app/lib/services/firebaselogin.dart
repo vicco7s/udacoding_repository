@@ -14,10 +14,32 @@ class FirebaseLoginService{
 
   Future<User> _handleSignIn() async {
     try{
-      final GoogleSignInAccount googleSignInAccount = await _googleSignIn.signIn().catchError(onError) => print('Error');
+      final GoogleSignInAccount googleSignInAccount = await _googleSignIn.signIn().catchError((onError) => print('onError'));
+      final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
+      UserCredential userCredential = await _auth.signInWithCredential(credential);
+      final User user = userCredential.user;
+      if(user != null){
+        await _prefService.savedDataPref(
+          datetype: 'bool',
+          key: 'isLogin',
+          value: true,
+        );
+        return user;
+      }
+      return null;
     }catch(e){
-
+      print('Error Google SignIn');
+      print(e);
+      return null;
     }
   }
-
+    Future<void> signOut() async {
+      await _auth.signOut();
+      await _googleSignIn.signOut();
+      await _prefService.removeLoginData();
+    }
 }
