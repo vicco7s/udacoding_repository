@@ -20,15 +20,15 @@ class FirebaseLoginService{
         accessToken: googleSignInAuthentication.accessToken,
         idToken: googleSignInAuthentication.idToken,
       );
-      UserCredential userCredential = await _auth.signInWithCredential(credential);
-      final User user = userCredential.user;
-      if(user != null){
+      UserCredential authResult = await _auth.signInWithCredential(credential);
+      final User users = authResult.user;
+      if(users != null){
         await _prefService.savedDataPref(
           datetype: 'bool',
           key: 'isLogin',
           value: true,
         );
-        return user;
+        return users;
       }
       return null;
     }catch(e){

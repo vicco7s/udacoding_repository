@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wisata_app/Splash/Splash2.dart';
 import 'package:wisata_app/components/buttonLogin.dart';
 import 'package:wisata_app/page/homepage.dart';
 import 'package:wisata_app/services/firebaselogin.dart';
@@ -15,8 +16,8 @@ class _LoginPageState extends State<LoginPage> {
   FirebaseLoginService _firebaseLoginService = FirebaseLoginService();
   SharedPrefService _sharedPrefService = SharedPrefService();
 
-  Future checkLogin() async{
-    var result = await _sharedPrefService.isLogin();
+  Future<void> checkLogin() async{
+    final result = await _sharedPrefService.isLogin();
     setState(() {
       isLogin = result;
     });
@@ -47,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
                 _firebaseLoginService.handleSignIn().then((result) {
                     if(result != null) {
                       Navigator.pushReplacement(context, MaterialPageRoute(
-                          builder: (context) => HomePage()
+                          builder: (context) => HomePage(),
                       ));
                     }
                 });
